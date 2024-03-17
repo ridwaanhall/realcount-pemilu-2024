@@ -1,3 +1,4 @@
 base/templates/
 templates/
 __pycache__/
+static/

@@ -11,8 +11,8 @@ rooms = [
 
 def home(request):
     # return HttpResponse("ridwaanhall")
-    context = {'rooms': rooms}
-    return render(request, 'base/home.html', context)
+    # context = {'rooms': rooms}
+    return render(request, 'base/home.html')
 
 def room(request, pk):
     # return HttpResponse("room ridwaanhall")
@@ -22,3 +22,6 @@ def room(request, pk):
             room = i
     context = {'room': room}
     return render(request, 'base/room.html', context)
+
+def cek_doang(request):
+    return render(request, 'main.html')
