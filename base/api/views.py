@@ -21,8 +21,8 @@ def getRoutes(request):
         'GET /api/votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>',
         'GET /api/votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>/<str:votes_tingkat6>',    
     ]
-
     return Response(routes)
+
 
 class Names(APIView):
     def get(self, request, format=None):
@@ -35,6 +35,7 @@ class Names(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class Sengketa(APIView):
     def get(self, request, format=None):
         url = 'https://sirekap-obj-data.kpu.go.id/pemilu/ds/ppwp.json'
@@ -45,6 +46,7 @@ class Sengketa(APIView):
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class WilayahTingkat2(APIView):
     def get(self, request, wilayah_tingkat2, format=None):
@@ -57,6 +59,7 @@ class WilayahTingkat2(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 
+
 class WilayahTingkat3(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, format=None):
         url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}.json'
@@ -68,6 +71,7 @@ class WilayahTingkat3(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class WilayahTingkat4(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, format=None):
         url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}.json'
@@ -78,6 +82,7 @@ class WilayahTingkat4(APIView):
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class WilayahTingkat5(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, wilayah_tingkat5, format=None):
@@ -102,6 +107,7 @@ class VotesTingkat1(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+        
 class VotesTingkat2(APIView):
     def get(self, request, votes_tingkat2, format=None):
         url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}.json'
@@ -112,6 +118,7 @@ class VotesTingkat2(APIView):
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         
 class VotesTingkat3(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, format=None):
@@ -124,6 +131,7 @@ class VotesTingkat3(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+        
 class VotesTingkat4(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, format=None):
         url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}.json'
@@ -135,6 +143,7 @@ class VotesTingkat4(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+        
 class VotesTingkat5(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, format=None):
         url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}.json'
@@ -145,6 +154,7 @@ class VotesTingkat5(APIView):
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         
 class VotesTingkat6(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, votes_tingkat6, format=None):
@@ -160,28 +170,21 @@ class VotesTingkat6(APIView):
         
 class HomeAPI(APIView):
     def get(self, request, format=None):
-        # Fetching JSON data from the first URL
         names_url = "http://127.0.0.1:8000/api/names/"
         votes_url = "http://127.0.0.1:8000/api/votes/"
         wilayah_url = "http://127.0.0.1:8000/api/wilayah/0/"
 
-        # Fetching JSON data from the names URL
         names_response = requests.get(names_url)
         names_data = names_response.json()
 
-        # Fetching JSON data from the votes URL
         votes_response = requests.get(votes_url)
         votes_data = votes_response.json()
         
-        # Fetching JSON data from the wilayah URL
         wilayah_response = requests.get(wilayah_url)
         wilayah_data = wilayah_response.json()
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
-
-        short_names = ["AMIN", "PRAGIB", "GAMA"]
         
-        # Processing names data to match with votes data
         level_1 = {}
         for key, value in names_data.items():
             level_1[key] = {
@@ -198,26 +201,6 @@ class HomeAPI(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        '''
-        table data is
-        "table": {
-            "11": {
-                "psu": "Reguler",
-                "100025": 1885991,
-                "100026": 570090,
-                "100027": 57148,
-                "persen": 78.95,
-                "status_progress": true
-            },
-            "12": {
-                "psu": "Reguler",
-                "100025": 1457685,
-                "100026": 2952715,
-                "100027": 616136,
-                "persen": 61.84,
-                "status_progress": true
-            },
-        '''
         level_2 = {}
         for key, value in votes_data["table"].items():
             area_code = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
@@ -246,20 +229,9 @@ class HomeAPI(APIView):
                 "total_area_votes_formatted": "{:,}".format(value["100025"] + value["100026"] + value["100027"])
             }
             
-        
-        '''
-        this is json data of progress
-            "progres": {
-                "total": 823378,
-                "progres": 647998
-            }
-        }
-        '''
-        # Extracting values from progres dictionary
         total_progress_tps = votes_data["progres"]["total"]
         progress_tps = votes_data["progres"]["progres"]
 
-        # Constructing progress_data
         progress_data = {
             "total_tps": total_progress_tps,
             "total_tps_formatted": "{:,}".format(total_progress_tps),
@@ -271,7 +243,6 @@ class HomeAPI(APIView):
         
         highest_votes = max(values for key, values in votes_data["chart"].items() if key != "persen")
         
-        # whose vote is highest
         for key, values in votes_data["chart"].items():
             if values == highest_votes:
                 whose_highest = key
@@ -284,7 +255,6 @@ class HomeAPI(APIView):
                 else:
                     whose_highest = key
         
-        # Constructing the final JSON response
         response_data = {
             "last_update": last_update_formatted,
             "highest_votes": highest_votes,
@@ -298,5 +268,4 @@ class HomeAPI(APIView):
             "level_2": level_2
         }
 
-        # Returning the response
         return Response(response_data)
