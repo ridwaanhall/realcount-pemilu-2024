@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 
 def home(request):
-    url = 'http://127.0.0.1:8000/api/home_api/'
+    url = 'http://127.0.0.1:8000/api/home-api/'
     response = requests.get(url)
     
     if response.status_code == 200:

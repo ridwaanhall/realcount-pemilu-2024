@@ -20,5 +20,5 @@ urlpatterns = [
     path('votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>/', views.VotesTingkat5.as_view(), name='votes_tingkat_5'),
     path('votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>/<str:votes_tingkat6>/', views.VotesTingkat6.as_view(), name='votes_tingkat_6'),
     
-    path('home_api/', views.HomeAPI.as_view(), name='home_api'),
+    path('home-api/', views.HomeAPI.as_view(), name='home_api'),
 ]
