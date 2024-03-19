@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -157,6 +158,145 @@ class VotesTingkat6(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         
-class HomeAPIView(APIView):
+class HomeAPI(APIView):
     def get(self, request, format=None):
-        return Response('Hello, World!')
+        # Fetching JSON data from the first URL
+        names_url = "http://127.0.0.1:8000/api/names/"
+        votes_url = "http://127.0.0.1:8000/api/votes/"
+        wilayah_url = "http://127.0.0.1:8000/api/wilayah/0/"
+
+        # Fetching JSON data from the names URL
+        names_response = requests.get(names_url)
+        names_data = names_response.json()
+
+        # Fetching JSON data from the votes URL
+        votes_response = requests.get(votes_url)
+        votes_data = votes_response.json()
+        
+        # Fetching JSON data from the wilayah URL
+        wilayah_response = requests.get(wilayah_url)
+        wilayah_data = wilayah_response.json()
+
+        total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
+
+        short_names = ["AMIN", "PRAGIB", "GAMA"]
+        
+        # Processing names data to match with votes data
+        level_1 = {}
+        for key, value in names_data.items():
+            level_1[key] = {
+                "unique_number": str(value["nomor_urut"]).zfill(2),  # Padding with zeros
+                "capres_name": value["nama"].split(" - ")[0].strip(),
+                "cawapres_name": value["nama"].split(" - ")[1].strip(),
+                "votes": votes_data["chart"][key],
+                "votes_formatted": "{:,}".format(votes_data["chart"][key]),  # Formatting votes with thousands separator
+                "percentage": votes_data["chart"][key] / total_votes * 100,
+                "percentage_formatted": "{:.2f}%".format(votes_data["chart"][key] / total_votes * 100),
+            }
+            
+
+        last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
+        last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
+
+        '''
+        table data is
+        "table": {
+            "11": {
+                "psu": "Reguler",
+                "100025": 1885991,
+                "100026": 570090,
+                "100027": 57148,
+                "persen": 78.95,
+                "status_progress": true
+            },
+            "12": {
+                "psu": "Reguler",
+                "100025": 1457685,
+                "100026": 2952715,
+                "100027": 616136,
+                "persen": 61.84,
+                "status_progress": true
+            },
+        '''
+        level_2 = {}
+        for key, value in votes_data["table"].items():
+            area_code = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
+            area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
+            area_name = next((item["nama"] for item in wilayah_data if item["kode"] == key), None)
+            level = next((item["tingkat"] for item in wilayah_data if item["kode"] == key), None)
+            level_2[key] = {
+                "area_code": area_code,
+                "area_id": area_id,
+                "area_name": area_name,
+                "area_progress": value["persen"],
+                "level": level,
+                "100025": value["100025"],
+                "100025_formatted": "{:,}".format(value["100025"]),
+                "100025_percentage": (value["100025"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100025_percentage_formatted": "{:.2f}%".format((value["100025"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "100026": value["100026"],
+                "100026_formatted": "{:,}".format(value["100026"]),
+                "100026_percentage": (value["100026"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100026_percentage_formatted": "{:.2f}%".format((value["100026"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "100027": value["100027"],
+                "100027_formatted": "{:,}".format(value["100027"]),
+                "100027_percentage": (value["100027"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100027_percentage_formatted": "{:.2f}%".format((value["100027"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "total_area_votes": value["100025"] + value["100026"] + value["100027"],
+                "total_area_votes_formatted": "{:,}".format(value["100025"] + value["100026"] + value["100027"])
+            }
+            
+        
+        '''
+        this is json data of progress
+            "progres": {
+                "total": 823378,
+                "progres": 647998
+            }
+        }
+        '''
+        # Extracting values from progres dictionary
+        total_progress_tps = votes_data["progres"]["total"]
+        progress_tps = votes_data["progres"]["progres"]
+
+        # Constructing progress_data
+        progress_data = {
+            "total_tps": total_progress_tps,
+            "total_tps_formatted": "{:,}".format(total_progress_tps),
+            "progres_tps": progress_tps,
+            "progres_tps_formatted": "{:,}".format(progress_tps),
+            "percentage_tps": (progress_tps / total_progress_tps) * 100,
+            "percentage_tps_formatted": "{:.2f}%".format((progress_tps / total_progress_tps) * 100),
+        }
+        
+        highest_votes = max(values for key, values in votes_data["chart"].items() if key != "persen")
+        
+        # whose vote is highest
+        for key, values in votes_data["chart"].items():
+            if values == highest_votes:
+                whose_highest = key
+                if key == "100025":
+                    whose_highest = f"H. Anies Rasyid Baswedan, Ph.D. with {highest_votes:,} votes"
+                elif key == "100026":
+                    whose_highest = f"H. Prabowo Subianto with {highest_votes:,} votes"
+                elif key == "100027":
+                    whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
+                else:
+                    whose_highest = key
+        
+        # Constructing the final JSON response
+        response_data = {
+            "last_update": last_update_formatted,
+            "highest_votes": highest_votes,
+            "highest_votes_formatted": "{:,}".format(highest_votes),
+            "whose_highest_votes": whose_highest,
+            "total_votes": total_votes,
+            "total_votes_formatted": "{:,}".format(total_votes),
+            "progress_data": progress_data,
+            "level_1": level_1,
+            # **level_2
+            "level_2": level_2
+        }
+
+        # Returning the response
+        return Response(response_data)
