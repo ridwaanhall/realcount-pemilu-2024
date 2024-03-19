@@ -212,6 +212,7 @@ class HomeAPI(APIView):
                 "area_id": area_id,
                 "area_name": area_name,
                 "area_progress": value["persen"],
+                "area_progress_formatted": "{:.2f}%".format(value["persen"]),
                 "level": level,
                 "100025": value["100025"],
                 "100025_formatted": "{:,}".format(value["100025"]),
