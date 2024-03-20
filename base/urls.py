@@ -7,5 +7,6 @@ urlpatterns = [
     path('area', views.level1, name='level1'),
     path('area/<str:area_code_lv2>/', views.level2, name='level2'),
     path('area/<str:area_code_lv2>/<str:area_code_lv3>/', views.level3, name='level3'),
+    path('area/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.level4, name='level4'),
     # path('test', views.cek_doang, name='home')
 ]
