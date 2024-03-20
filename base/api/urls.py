@@ -24,5 +24,5 @@ urlpatterns = [
     path('level-api/<str:area_code_lv2>/', views.Level2API.as_view(), name='level_api_2'),
     path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/', views.Level3API.as_view(), name='level_api_3'),
     path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.Level4API.as_view(), name='level_api_4'),
-    # path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/', views.Level5API.as_view(), name='level_api_5'),
+    path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/', views.Level5API.as_view(), name='level_api_5'),
 ]

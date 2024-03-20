@@ -777,3 +777,200 @@ class Level4API(APIView):
         }
 
         return Response(response_data)
+    
+    
+class Level5API(APIView):
+    def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, format=None):
+        names_url = "http://127.0.0.1:8000/api/names/"
+        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
+        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
+        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        wilayah_lv5_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        votes_lv5_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        
+        names_response = requests.get(names_url)
+        names_data = names_response.json()
+
+        wilayah_lv1_response = requests.get(wilayah_lv1_url)
+        wilayah_lv1_data = wilayah_lv1_response.json()
+        
+        wilayah_lv2_response = requests.get(wilayah_lv2_url)
+        wilayah_lv2_data = wilayah_lv2_response.json()
+        
+        wilayah_lv3_response = requests.get(wilayah_lv3_url)
+        wilayah_lv3_data = wilayah_lv3_response.json()
+        
+        wilayah_lv4_response = requests.get(wilayah_lv4_url)
+        wilayah_lv4_data = wilayah_lv4_response.json()
+
+        votes_response = requests.get(votes_lv5_url)
+        votes_data = votes_response.json()
+        print(votes_data)
+        
+        wilayah_response = requests.get(wilayah_lv5_url)
+        wilayah_data = wilayah_response.json()
+
+        total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
+        
+        level_5 = {}
+        for key, value in names_data.items():
+            level_5[key] = {
+                "unique_number": str(value["nomor_urut"]).zfill(2),  # Padding with zeros
+                "capres_name": value["nama"].split(" - ")[0].strip(),
+                "cawapres_name": value["nama"].split(" - ")[1].strip(),
+                "votes": votes_data["chart"][key],
+                "votes_formatted": "{:,}".format(votes_data["chart"][key]),  # Formatting votes with thousands separator
+                "percentage": votes_data["chart"][key] / total_votes * 100,
+                "percentage_formatted": "{:.2f}%".format(votes_data["chart"][key] / total_votes * 100),
+            }
+            
+
+        last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
+        last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
+
+        level_6 = {}
+        for key, value in votes_data["table"].items():
+            area_code_lv6 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
+            area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
+            area_name = next((item["nama"] for item in wilayah_data if item["kode"] == key), None)
+            level = next((item["tingkat"] for item in wilayah_data if item["kode"] == key), None)
+
+            # Check if keys exist before accessing them
+            votes_100025 = value.get("100025", 0)
+            votes_100026 = value.get("100026", 0)
+            votes_100027 = value.get("100027", 0)
+
+            level_6[key] = {
+                "code_lv2": area_code_lv2,
+                "area_code_lv3": area_code_lv3,
+                "area_code_lv4": area_code_lv4,
+                "area_code_lv5": area_code_lv5,
+                "area_code_lv6": area_code_lv6,
+                "area_id": area_id,
+                "area_name": area_name,
+                "area_progress": value["persen"],
+                "area_progress_formatted": "{:.2f}%".format(value["persen"]),
+                "level": level,
+                "100025": votes_100025,
+                "100025_formatted": "{:,}".format(votes_100025),
+                "100025_percentage": (votes_100025 / (votes_100025 + votes_100026 + votes_100027)) * 100 if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "100025_percentage_formatted": "{:.2f}%".format((votes_100025 / (votes_100025 + votes_100026 + votes_100027)) * 100) if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "100026": votes_100026,
+                "100026_formatted": "{:,}".format(votes_100026),
+                "100026_percentage": (votes_100026 / (votes_100025 + votes_100026 + votes_100027)) * 100 if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "100026_percentage_formatted": "{:.2f}%".format((votes_100026 / (votes_100025 + votes_100026 + votes_100027)) * 100) if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "100027": votes_100027,
+                "100027_formatted": "{:,}".format(votes_100027),
+                "100027_percentage": (votes_100027 / (votes_100025 + votes_100026 + votes_100027)) * 100 if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "100027_percentage_formatted": "{:.2f}%".format((votes_100027 / (votes_100025 + votes_100026 + votes_100027)) * 100) if (votes_100025 + votes_100026 + votes_100027) != 0 else 0,
+                "total_area_votes": votes_100025 + votes_100026 + votes_100027,
+                "total_area_votes_formatted": "{:,}".format(votes_100025 + votes_100026 + votes_100027)
+            }
+            
+        total_progress_tps = votes_data["progres"]["total"]
+        progress_tps = votes_data["progres"]["progres"]
+
+        progress_data = {
+            "total_tps": total_progress_tps,
+            "total_tps_formatted": "{:,}".format(total_progress_tps),
+            "progres_tps": progress_tps,
+            "progres_tps_formatted": "{:,}".format(progress_tps),
+            "percentage_tps": (progress_tps / total_progress_tps) * 100,
+            "percentage_tps_formatted": "{:.2f}%".format((progress_tps / total_progress_tps) * 100),
+        }
+        
+        highest_votes = max(values for key, values in votes_data["chart"].items() if key != "persen")
+        
+        for key, values in votes_data["chart"].items():
+            if values == highest_votes:
+                whose_highest = key
+                if key == "100025":
+                    whose_highest = f"H. Anies Rasyid Baswedan, Ph.D. with {highest_votes:,} votes"
+                elif key == "100026":
+                    whose_highest = f"H. Prabowo Subianto with {highest_votes:,} votes"
+                elif key == "100027":
+                    whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
+                else:
+                    whose_highest = key
+        
+        percentage_tps = (progress_tps / total_progress_tps) * 100
+        
+        votes_data_100025 = votes_data["chart"]["100025"]
+        votes_data_100026 = votes_data["chart"]["100026"]
+        votes_data_100027 = votes_data["chart"]["100027"]
+        
+        total_votes_data = votes_data_100025 + votes_data_100026 + votes_data_100027
+        
+        percentage_votes_data_100025 = (votes_data_100025 / total_votes_data) * 100
+        percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
+        percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
+        
+        html_progres_tps = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_tps }%' aria-valuenow='{ percentage_tps }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        
+        html_progres = {
+            "html_progres_tps": html_progres_tps,
+            "html_progress_100025": html_progres_100025,
+            "html_progress_100026": html_progres_100026,
+            "html_progress_100027": html_progress_100027
+        }
+        
+        area_name_lv2 = None
+        for item in wilayah_lv1_data:
+            if item["kode"] == area_code_lv2:
+                area_name_lv2 = item["nama"]
+                break
+        print(wilayah_lv3_data)
+        area_name_lv3 = None
+        for item in wilayah_lv2_data:
+            if item["kode"] == area_code_lv3:
+                area_name_lv3 = item["nama"]
+                break
+            
+        area_name_lv4 = None
+        for item in wilayah_lv3_data:
+            if item["kode"] == area_code_lv4:
+                area_name_lv4 = item["nama"]
+                break
+            # print(item)
+        
+        area_name_lv5 = None
+        for item in wilayah_lv4_data:
+            if item["kode"] == area_code_lv5:
+                area_name_lv5 = item["nama"]
+                break
+            
+        area_name_lv6 = None
+        for item in wilayah_data:
+            if item["kode"] == area_code_lv6:
+                area_name_lv6 = item["nama"]
+                break
+
+        response_data = {
+            "last_update": last_update_formatted,
+            "area_code_lv2": area_code_lv2,
+            "area_name_lv2": area_name_lv2,
+            "area_code_lv3": area_code_lv3,
+            "area_name_lv3": area_name_lv3,
+            "area_code_lv4": area_code_lv4,
+            "area_name_lv4": area_name_lv4,
+            "area_code_lv5": area_code_lv5,
+            "area_name_lv5": area_name_lv5,
+            "area_code_lv6": area_code_lv6,
+            "area_name_lv6": area_name_lv6,
+            "highest_votes": highest_votes,
+            "highest_votes_formatted": "{:,}".format(highest_votes),
+            "whose_highest_votes": whose_highest,
+            "total_votes": total_votes,
+            "total_votes_formatted": "{:,}".format(total_votes),
+            "html_progres": html_progres,
+            "progress_data": progress_data,
+            "level_5": level_5,
+            # **level_6
+            "level_6": level_6
+        }
+
+        return Response(response_data)
