@@ -1109,55 +1109,121 @@ class Level6API(APIView):
                 area_name_lv6 = item["nama"]
                 break
         
-        images = votes_data.get("images", [])
+        html_images = []
+        if votes_data and "images" in votes_data:
+            for i, image_url in enumerate(votes_data["images"], start=1):
+                if image_url:
+                    html_images.append(f'<div class="swiper-slide" style="background-image: url({image_url})">Slide {i}</div>')
+        else:
+            # Handle the case when "images" key is missing or empty
+            html_images = ['<div class="swiper-slide">No images available</div>']
+            
         administrasi = votes_data.get("administrasi", {})
+        images = votes_data.get("images", [])
 
         suara_sah = administrasi["suara_sah"]
         suara_tidak_sah = administrasi["suara_tidak_sah"]
         suara_total = administrasi["suara_total"]
-
+        
         if suara_sah + suara_tidak_sah == suara_total:
-            status_suara = "Sah"
+            status_suara = "Votes (suara) - correct count"
         else:
-            status_suara = "Tidak Sah"
+            status_suara = "Votes (suara) - wrong count"
+
+        pemilih_dpt_jumlah = administrasi["pemilih_dpt_j"]
+        pemilih_dpt_laki = administrasi["pemilih_dpt_l"]
+        pemilih_dpt_perempuan = administrasi["pemilih_dpt_p"]
+        
+        if pemilih_dpt_jumlah == pemilih_dpt_laki + pemilih_dpt_perempuan:
+            status_pemilih_dpt = "Pemilih DPT - correct count"
+        else:
+            status_pemilih_dpt = "Pemilih DPT - wrong count"
+
+        pengguna_dpt_jumlah = administrasi["pengguna_dpt_j"]
+        pengguna_dpt_laki = administrasi["pengguna_dpt_l"]
+        pengguna_dpt_perempuan = administrasi["pengguna_dpt_p"]
+        
+        if pengguna_dpt_jumlah == pengguna_dpt_laki + pengguna_dpt_perempuan:
+            status_pengguna_dpt = "Pengguna DPT - correct count"
+        else:
+            status_pengguna_dpt = "Pengguna DPT - wrong count"
+            
+        pengguna_dptb_jumlah = administrasi["pengguna_dptb_j"]
+        pengguna_dptb_laki = administrasi["pengguna_dptb_l"]
+        pengguna_dptb_perempuan = administrasi["pengguna_dptb_p"]
+        
+        if pengguna_dptb_jumlah == pengguna_dptb_laki + pengguna_dptb_perempuan:
+            status_pengguna_dptb = "Pengguna DPTB - correct count"
+        else:
+            status_pengguna_dptb = "Pengguna DPTB - wrong count"
+            
+        pengguna_total_jumlah = administrasi["pengguna_total_j"]
+        pengguna_total_laki = administrasi["pengguna_total_l"]
+        pengguna_total_perempuan = administrasi["pengguna_total_p"]
+
+        if pengguna_total_jumlah == pengguna_total_laki + pengguna_total_perempuan:
+            status_pengguna_total = "Pengguna Total - correct count"
+        else:
+            status_pengguna_total = "Pengguna Total - wrong count"
+
+        pengguna_non_dpt_jumlah = administrasi["pengguna_non_dpt_j"]
+        pengguna_non_dpt_laki = administrasi["pengguna_non_dpt_l"]
+        pengguna_non_dpt_perempuan = administrasi["pengguna_non_dpt_p"]
+
+        if pengguna_non_dpt_jumlah == pengguna_non_dpt_laki + pengguna_non_dpt_perempuan:
+            status_pengguna_non_dpt = "Pengguna Non DPT - correct count"
+        else:
+            status_pengguna_non_dpt = "Pengguna Non DPT - wrong count"
+
+        if pengguna_total_jumlah == suara_sah + suara_tidak_sah:
+            valid = "valid"
+        else:
+            valid = "invalid"
 
         modified_administrasi = {
-            "suara_sah": administrasi["suara_sah"],
-            "suara_sah_formated": f"{administrasi['suara_sah']:,}",
-            "suara_tidak_sah": administrasi["suara_tidak_sah"],
-            "suara_tidak_sah_formated": f"{administrasi['suara_tidak_sah']:,}",
-            "suara_total": administrasi["suara_total"],
-            "suara_total_formated": f"{administrasi['suara_total']:,}",
+            # "suara_sah": administrasi["suara_sah"],
+            "valid": valid,
             "status_suara": status_suara,
-            "pemilih_dpt_jumlah": administrasi["pemilih_dpt_j"],
+            "status_pemilih_dpt": status_pemilih_dpt,
+            "status_pengguna_dpt": status_pengguna_dpt,
+            "status_pengguna_dptb": status_pengguna_dptb,
+            "status_pengguna_total": status_pengguna_total,
+            "status_pengguna_non_dpt": status_pengguna_non_dpt,
+
+            "suara_sah_formated": f"{administrasi['suara_sah']:,}",
+            # "suara_tidak_sah": administrasi["suara_tidak_sah"],
+            "suara_tidak_sah_formated": f"{administrasi['suara_tidak_sah']:,}",
+            # "suara_total": administrasi["suara_total"],
+            "suara_total_formated": f"{administrasi['suara_total']:,}",
+            # "pemilih_dpt_jumlah": administrasi["pemilih_dpt_j"],
             "pemilih_dpt_jumlah_formated": f"{administrasi['pemilih_dpt_j']:,}",
-            "pemilih_dpt_laki": administrasi["pemilih_dpt_l"],
+            # "pemilih_dpt_laki": administrasi["pemilih_dpt_l"],
             "pemilih_dpt_laki_formated": f"{administrasi['pemilih_dpt_l']:,}",
-            "pemilih_dpt_perempuan": administrasi["pemilih_dpt_p"],
+            # "pemilih_dpt_perempuan": administrasi["pemilih_dpt_p"],
             "pemilih_dpt_perempuan_formated": f"{administrasi['pemilih_dpt_p']:,}",
-            "pengguna_dpt_jumlah": administrasi["pengguna_dpt_j"],
+            # "pengguna_dpt_jumlah": administrasi["pengguna_dpt_j"],
             "pengguna_dpt_jumlah_formated": f"{administrasi['pengguna_dpt_j']:,}",
-            "pengguna_dpt_laki": administrasi["pengguna_dpt_l"],
+            # "pengguna_dpt_laki": administrasi["pengguna_dpt_l"],
             "pengguna_dpt_laki_formated": f"{administrasi['pengguna_dpt_l']:,}",
-            "pengguna_dpt_perempuan": administrasi["pengguna_dpt_p"],
+            # "pengguna_dpt_perempuan": administrasi["pengguna_dpt_p"],
             "pengguna_dpt_perempuan_formated": f"{administrasi['pengguna_dpt_p']:,}",
-            "pengguna_dptb_jumlah": administrasi["pengguna_dptb_j"],
+            # "pengguna_dptb_jumlah": administrasi["pengguna_dptb_j"],
             "pengguna_dptb_jumlah_formated": f"{administrasi['pengguna_dptb_j']:,}",
-            "pengguna_dptb_laki": administrasi["pengguna_dptb_l"],
+            # "pengguna_dptb_laki": administrasi["pengguna_dptb_l"],
             "pengguna_dptb_laki_formated": f"{administrasi['pengguna_dptb_l']:,}",
-            "pengguna_dptb_perempuan": administrasi["pengguna_dptb_p"],
-            "penguna_dptb_perempuan_formated": f"{administrasi['pengguna_dptb_p']:,}",
-            "pengguna_total_jumlah": administrasi["pengguna_total_j"],
+            # "pengguna_dptb_perempuan": administrasi["pengguna_dptb_p"],
+            "pengguna_dptb_perempuan_formated": f"{administrasi['pengguna_dptb_p']:,}",
+            # "pengguna_total_jumlah": administrasi["pengguna_total_j"],
             "pengguna_total_jumlah_formated": f"{administrasi['pengguna_total_j']:,}",
-            "pengguna_total_laki": administrasi["pengguna_total_l"],
+            # "pengguna_total_laki": administrasi["pengguna_total_l"],
             "pengguna_total_laki_formated": f"{administrasi['pengguna_total_l']:,}",
-            "pengguna_total_perempuan": administrasi["pengguna_total_p"],
+            # "pengguna_total_perempuan": administrasi["pengguna_total_p"],
             "pengguna_total_perempuan_formated": f"{administrasi['pengguna_total_p']:,}",
-            "pengguna_non_dpt_jumlah": administrasi["pengguna_non_dpt_j"],
+            # "pengguna_non_dpt_jumlah": administrasi["pengguna_non_dpt_j"],
             "pengguna_non_dpt_jumlah_formated": f"{administrasi['pengguna_non_dpt_j']:,}",
-            "pengguna_non_dpt_laki": administrasi["pengguna_non_dpt_l"],
+            # "pengguna_non_dpt_laki": administrasi["pengguna_non_dpt_l"],
             "pengguna_non_dpt_laki_formated": f"{administrasi['pengguna_non_dpt_l']:,}",
-            "pengguna_non_dpt_perempuan": administrasi["pengguna_non_dpt_p"],
+            # "pengguna_non_dpt_perempuan": administrasi["pengguna_non_dpt_p"],
             "pengguna_non_dpt_perempuan_formated": f"{administrasi['pengguna_non_dpt_p']:,}",
         }
 
@@ -1183,6 +1249,178 @@ class Level6API(APIView):
             "level_6": level_6,
             "images": images,  # Include the "images" field, defaulting to an empty list if not present
             "administrasi": modified_administrasi, 
+        }
+
+        return Response(response_data)
+    
+    
+class Level61API(APIView):
+    def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, area_code_lv6, format=None):
+        # Define URLs
+        names_url = "http://127.0.0.1:8000/api/names/"
+        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
+        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
+        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        wilayah_lv5_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        votes_lv6_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/{area_code_lv6}"
+        
+        # Make API requests
+        names_response = requests.get(names_url)
+        wilayah_lv1_response = requests.get(wilayah_lv1_url)
+        wilayah_lv2_response = requests.get(wilayah_lv2_url)
+        wilayah_lv3_response = requests.get(wilayah_lv3_url)
+        wilayah_lv4_response = requests.get(wilayah_lv4_url)
+        wilayah_lv5_response = requests.get(wilayah_lv5_url)
+        votes_response = requests.get(votes_lv6_url)
+
+        # Initialize default values
+        default_data = {
+            "area_name": None,
+            "highest_votes": None,
+            "highest_votes_formatted": None,
+            "whose_highest_votes": None,
+            "total_votes": None,
+            "total_votes_formatted": None,
+            "html_progres": None,
+            "level_6": {},
+            "images": [],
+            "administrasi": {}
+        }
+
+        # Parse JSON data or use default values if API request fails
+        names_data = names_response.json() if names_response.status_code == 200 else {}
+        wilayah_lv1_data = wilayah_lv1_response.json() if wilayah_lv1_response.status_code == 200 else []
+        wilayah_lv2_data = wilayah_lv2_response.json() if wilayah_lv2_response.status_code == 200 else []
+        wilayah_lv3_data = wilayah_lv3_response.json() if wilayah_lv3_response.status_code == 200 else []
+        wilayah_lv4_data = wilayah_lv4_response.json() if wilayah_lv4_response.status_code == 200 else []
+        wilayah_lv5_data = wilayah_lv5_response.json() if wilayah_lv5_response.status_code == 200 else []
+        votes_data = votes_response.json() if votes_response.status_code == 200 else {}
+
+        # Handle missing data by filling with default values
+        area_name_lv2 = wilayah_lv1_data[0]["nama"] if wilayah_lv1_data else None
+        area_name_lv3 = wilayah_lv2_data[0]["nama"] if wilayah_lv2_data else None
+        area_name_lv4 = wilayah_lv3_data[0]["nama"] if wilayah_lv3_data else None
+        area_name_lv5 = wilayah_lv4_data[0]["nama"] if wilayah_lv4_data else None
+        area_name_lv6 = wilayah_lv5_data[0]["nama"] if wilayah_lv5_data else None
+
+        highest_votes = None
+        whose_highest = None
+        total_votes = None
+        html_progres = None
+
+        if votes_data["chart"] is not None:
+            total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen" and values is not None)
+
+            filtered_values = [value for key, value in votes_data["chart"].items() if value is not None]
+            if filtered_values:
+                highest_votes = max(filtered_values)
+
+            for key, values in votes_data["chart"].items():
+                if values == highest_votes:
+                    whose_highest = key
+                    if key == "100025":
+                        whose_highest = f"H. Anies Rasyid Baswedan, Ph.D. with {highest_votes:,} votes"
+                    elif key == "100026":
+                        whose_highest = f"H. Prabowo Subianto with {highest_votes:,} votes"
+                    elif key == "100027":
+                        whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
+                    else:
+                        whose_highest = key
+
+            votes_data_100025 = votes_data["chart"].get("100025", 0)
+            votes_data_100026 = votes_data["chart"].get("100026", 0)
+            votes_data_100027 = votes_data["chart"].get("100027", 0)
+
+            total_votes_data = votes_data_100025 + votes_data_100026 + votes_data_100027
+
+            if total_votes_data != 0:
+                percentage_votes_data_100025 = (votes_data_100025 / total_votes_data) * 100
+                percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
+                percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
+
+                html_progres = {
+                    "html_progress_100025": f"<div class='progress-bar bg-secondary' role='progressbar' style='width: {percentage_votes_data_100025}%' aria-valuenow='{percentage_votes_data_100025}' aria-valuemin='0' aria-valuemax='100'></div>",
+                    "html_progress_100026": f"<div class='progress-bar bg-primary' role='progressbar' style='width: {percentage_votes_data_100026}%' aria-valuenow='{percentage_votes_data_100026}' aria-valuemin='0' aria-valuemax='100'></div>",
+                    "html_progress_100027": f"<div class='progress-bar bg-danger' role='progressbar' style='width: {percentage_votes_data_100027}%' aria-valuenow='{percentage_votes_data_100027}' aria-valuemin='0' aria-valuemax='100'></div>"
+                }
+
+        modified_administrasi = {}
+
+        if votes_data["administrasi"] is not None:
+            administrasi = votes_data["administrasi"]
+
+            suara_sah = administrasi.get("suara_sah", 0)
+            suara_tidak_sah = administrasi.get("suara_tidak_sah", 0)
+            suara_total = administrasi.get("suara_total", 0)
+
+            if suara_sah + suara_tidak_sah == suara_total:
+                status_suara = "CORRECT!!!!"
+            else:
+                status_suara = "WRONG!!!!"
+
+            modified_administrasi = {
+                # "suara_sah": suara_sah,
+                "suara_sah_formated": f"{suara_sah:,}",
+                # "suara_tidak_sah": suara_tidak_sah,
+                "suara_tidak_sah_formated": f"{suara_tidak_sah:,}",
+                # "suara_total": suara_total,
+                "suara_total_formated": f"{suara_total:,}",
+                "status_suara": status_suara,
+                # "pemilih_dpt_jumlah": administrasi.get("pemilih_dpt_j", 0),
+                "pemilih_dpt_jumlah_formated": f"{administrasi.get('pemilih_dpt_j', 0):,}",
+                # "pemilih_dpt_laki": administrasi.get("pemilih_dpt_l", 0),
+                "pemilih_dpt_laki_formated": f"{administrasi.get('pemilih_dpt_l', 0):,}",
+                # "pemilih_dpt_perempuan": administrasi.get("pemilih_dpt_p", 0),
+                "pemilih_dpt_perempuan_formated": f"{administrasi.get('pemilih_dpt_p', 0):,}",
+                # "pengguna_dpt_jumlah": administrasi.get("pengguna_dpt_j", 0),
+                "pengguna_dpt_jumlah_formated": f"{administrasi.get('pengguna_dpt_j', 0):,}",
+                # "pengguna_dpt_laki": administrasi.get("pengguna_dpt_l", 0),
+                "pengguna_dpt_laki_formated": f"{administrasi.get('pengguna_dpt_l', 0):,}",
+                # "pengguna_dpt_perempuan": administrasi.get("pengguna_dpt_p", 0),
+                "pengguna_dpt_perempuan_formated": f"{administrasi.get('pengguna_dpt_p', 0):,}",
+                # "pengguna_dptb_jumlah": administrasi.get("pengguna_dptb_j", 0),
+                "pengguna_dptb_jumlah_formated": f"{administrasi.get('pengguna_dptb_j', 0):,}",
+                # "pengguna_dptb_laki": administrasi.get("pengguna_dptb_l", 0),
+                "pengguna_dptb_laki_formated": f"{administrasi.get('pengguna_dptb_l', 0):,}",
+                # "pengguna_dptb_perempuan": administrasi.get("pengguna_dptb_p", 0),
+                "pengguna_dptb_perempuan_formated": f"{administrasi.get('pengguna_dptb_p', 0):,}",
+                # "pengguna_total_jumlah": administrasi.get("pengguna_total_j", 0),
+                "pengguna_total_jumlah_formated": f"{administrasi.get('pengguna_total_j', 0):,}",
+                # "pengguna_total_laki": administrasi.get("pengguna_total_l", 0),
+                "pengguna_total_laki_formated": f"{administrasi.get('pengguna_total_l', 0):,}",
+                # "pengguna_total_perempuan": administrasi.get("pengguna_total_p", 0),
+                "pengguna_total_perempuan_formated": f"{administrasi.get('pengguna_total_p', 0):,}",
+                # "pengguna_non_dpt_jumlah": administrasi.get("pengguna_non_dpt_j", 0),
+                "pengguna_non_dpt_jumlah_formated": f"{administrasi.get('pengguna_non_dpt_j', 0):,}",
+                # "pengguna_non_dpt_laki": administrasi.get("pengguna_non_dpt_l", 0),
+                "pengguna_non_dpt_laki_formated": f"{administrasi.get('pengguna_non_dpt_l', 0):,}",
+                # "pengguna_non_dpt_perempuan": administrasi.get("pengguna_non_dpt_p", 0),
+                "pengguna_non_dpt_perempuan_formated": f"{administrasi.get('pengguna_non_dpt_p', 0):,}",
+            }
+
+        # Construct response data
+        response_data = {
+            "last_update": datetime.now().strftime("%d %B %Y %H:%M:%S WIB"),
+            "area_code_lv2": area_code_lv2,
+            "area_name_lv2": area_name_lv2,
+            "area_code_lv3": area_code_lv3,
+            "area_name_lv3": area_name_lv3,
+            "area_code_lv4": area_code_lv4,
+            "area_name_lv4": area_name_lv4,
+            "area_code_lv5": area_code_lv5,
+            "area_name_lv5": area_name_lv5,
+            "area_code_lv6": area_code_lv6,
+            "area_name_lv6": area_name_lv6,
+            "highest_votes": highest_votes,
+            "highest_votes_formatted": "{:,}".format(highest_votes) if highest_votes is not None else None,
+            "whose_highest_votes": whose_highest,
+            "total_votes": total_votes,
+            "total_votes_formatted": "{:,}".format(total_votes) if total_votes is not None else None,
+            "html_progres": html_progres,
+            "level_6": {},
+            "images": votes_data.get("images", []),
+            "administrasi": modified_administrasi,
         }
 
         return Response(response_data)
