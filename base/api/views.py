@@ -1116,26 +1116,49 @@ class Level6API(APIView):
         suara_tidak_sah = administrasi["suara_tidak_sah"]
         suara_total = administrasi["suara_total"]
 
+        if suara_sah + suara_tidak_sah == suara_total:
+            status_suara = "Sah"
+        else:
+            status_suara = "Tidak Sah"
+
         modified_administrasi = {
             "suara_sah": administrasi["suara_sah"],
+            "suara_sah_formated": f"{administrasi['suara_sah']:,}",
             "suara_tidak_sah": administrasi["suara_tidak_sah"],
+            "suara_tidak_sah_formated": f"{administrasi['suara_tidak_sah']:,}",
             "suara_total": administrasi["suara_total"],
-            # "status_suara": status_suara,
+            "suara_total_formated": f"{administrasi['suara_total']:,}",
+            "status_suara": status_suara,
             "pemilih_dpt_jumlah": administrasi["pemilih_dpt_j"],
+            "pemilih_dpt_jumlah_formated": f"{administrasi['pemilih_dpt_j']:,}",
             "pemilih_dpt_laki": administrasi["pemilih_dpt_l"],
+            "pemilih_dpt_laki_formated": f"{administrasi['pemilih_dpt_l']:,}",
             "pemilih_dpt_perempuan": administrasi["pemilih_dpt_p"],
+            "pemilih_dpt_perempuan_formated": f"{administrasi['pemilih_dpt_p']:,}",
             "pengguna_dpt_jumlah": administrasi["pengguna_dpt_j"],
+            "pengguna_dpt_jumlah_formated": f"{administrasi['pengguna_dpt_j']:,}",
             "pengguna_dpt_laki": administrasi["pengguna_dpt_l"],
+            "pengguna_dpt_laki_formated": f"{administrasi['pengguna_dpt_l']:,}",
             "pengguna_dpt_perempuan": administrasi["pengguna_dpt_p"],
+            "pengguna_dpt_perempuan_formated": f"{administrasi['pengguna_dpt_p']:,}",
             "pengguna_dptb_jumlah": administrasi["pengguna_dptb_j"],
+            "pengguna_dptb_jumlah_formated": f"{administrasi['pengguna_dptb_j']:,}",
             "pengguna_dptb_laki": administrasi["pengguna_dptb_l"],
+            "pengguna_dptb_laki_formated": f"{administrasi['pengguna_dptb_l']:,}",
             "pengguna_dptb_perempuan": administrasi["pengguna_dptb_p"],
+            "penguna_dptb_perempuan_formated": f"{administrasi['pengguna_dptb_p']:,}",
             "pengguna_total_jumlah": administrasi["pengguna_total_j"],
+            "pengguna_total_jumlah_formated": f"{administrasi['pengguna_total_j']:,}",
             "pengguna_total_laki": administrasi["pengguna_total_l"],
+            "pengguna_total_laki_formated": f"{administrasi['pengguna_total_l']:,}",
             "pengguna_total_perempuan": administrasi["pengguna_total_p"],
+            "pengguna_total_perempuan_formated": f"{administrasi['pengguna_total_p']:,}",
             "pengguna_non_dpt_jumlah": administrasi["pengguna_non_dpt_j"],
+            "pengguna_non_dpt_jumlah_formated": f"{administrasi['pengguna_non_dpt_j']:,}",
             "pengguna_non_dpt_laki": administrasi["pengguna_non_dpt_l"],
-            "pengguna_non_dpt_perempuan": administrasi["pengguna_non_dpt_p"]
+            "pengguna_non_dpt_laki_formated": f"{administrasi['pengguna_non_dpt_l']:,}",
+            "pengguna_non_dpt_perempuan": administrasi["pengguna_non_dpt_p"],
+            "pengguna_non_dpt_perempuan_formated": f"{administrasi['pengguna_non_dpt_p']:,}",
         }
 
         response_data = {
