@@ -69,5 +69,18 @@ def level6(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, 
         error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
         return render(request, 'base/error.html', {'error_message': error_message})
 
+def sengketa(request):
+    url = 'http://127.0.0.1:8000/api/sengketa/'
+    response = requests.get(url)
+    print(response)
+    if response.status_code == 200:
+        json_data = response.json()
+        context = {'json_data': json_data}
+        return render(request, 'base/sengketa.html', context)
+    else:
+        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        return render(request, 'base/error.html', {'error_message': error_message})
+
+
 def cek_doang(request):
     pass

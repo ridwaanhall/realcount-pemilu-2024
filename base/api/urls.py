@@ -6,7 +6,7 @@ urlpatterns = [
     
     path('names/', views.Names.as_view(), name='names'),
     
-    path('sengketa/', views.Sengketa.as_view(), name='sengketa'),
+    path('sengketa/', views.Sengketa.as_view(), name='sengketa_api'),
     
     path('wilayah/<str:wilayah_tingkat2>/', views.WilayahTingkat2.as_view(), name='wilayah_tingkat_2'),
     path('wilayah/<str:wilayah_tingkat2>/<str:wilayah_tingkat3>/', views.WilayahTingkat3.as_view(), name='wilayah_tingkat_3'),
@@ -25,5 +25,9 @@ urlpatterns = [
     path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/', views.Level3API.as_view(), name='level_api_3'),
     path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.Level4API.as_view(), name='level_api_4'),
     path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/', views.Level5API.as_view(), name='level_api_5'),
-    path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/<str:area_code_lv6>/', views.Level6API.as_view(), name='level_api_6'),    
+    path('level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/<str:area_code_lv6>/', views.Level6API.as_view(), name='level_api_6'),
+
+    path('rekap/', views.HasilRekapTingkat1.as_view(), name='rekap_1'),
+    path('rekap/<str:area_code_lv2>/', views.HasilRekapTingkat2.as_view(), name='rekap_2'),
+    path('rekap/<str:area_code_lv2>/<str:area_code_lv3>/', views.HasilRekapTingkat3.as_view(), name='rekap_3'),
 ]

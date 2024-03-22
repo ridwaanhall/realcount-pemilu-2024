@@ -1146,7 +1146,7 @@ class Level6API(APIView):
                 "percentage": percentage,
                 "percentage_formatted": "{:.2f}%".format(percentage),
             }
-            
+
 
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
@@ -1389,3 +1389,39 @@ class Level6API(APIView):
         }
 
         return Response(response_data)
+
+
+class HasilRekapTingkat1(APIView):
+    def get(self, request, format=None):
+        url = 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp.json'
+
+        try:
+            response = requests.get(url)
+            data = response.json()
+            return Response(data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+class HasilRekapTingkat2(APIView):
+    def get(self, request, area_code_lv2, format=None):
+        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp/{area_code_lv2}.json'
+
+        try:
+            response = requests.get(url)
+            data = response.json()
+            return Response(data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class HasilRekapTingkat3(APIView):
+    def get(self, request, area_code_lv2, area_code_lv3, format=None):
+        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}.json'
+
+        try:
+            response = requests.get(url)
+            data = response.json()
+            return Response(data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
