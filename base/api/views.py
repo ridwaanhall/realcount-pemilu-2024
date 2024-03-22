@@ -342,7 +342,6 @@ class Level2API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        print(votes_data)
         level_3 = {}
         for key, value in votes_data["table"].items():
             area_code_lv3 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
@@ -657,8 +656,6 @@ class Level4API(APIView):
         
         wilayah_response = requests.get(wilayah_lv4_url)
         wilayah_data = wilayah_response.json()
-
-        print(votes_data)
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen") if votes_data["chart"] is not None else 0
         
@@ -1126,7 +1123,6 @@ class Level6API(APIView):
         wilayah_response = requests.get(wilayah_lv5_url)
         wilayah_data = wilayah_response.json()
 
-        print("hehe", votes_data["chart"])
         if votes_data["chart"] is not None:
             total_votes = sum(values for key, values in votes_data["chart"].items() if key != "null")
         else:
@@ -1147,11 +1143,9 @@ class Level6API(APIView):
                 "percentage_formatted": "{:.2f}%".format(percentage),
             }
 
-
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
                 
-        print("hehe 2", votes_data["chart"])
         if votes_data["chart"] is not None:
             highest_votes = max(values for key, values in votes_data["chart"].items() if key != "null")
         else:
@@ -1425,3 +1419,296 @@ class HasilRekapTingkat3(APIView):
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+class HasilRekap1API(APIView):
+    def get(self, request, format=None):
+        names_url = "http://127.0.0.1:8000/api/names/"
+        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
+        # wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
+        # wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        # wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        # wilayah_lv5_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        rekap_hasil = f"http://127.0.0.1:8000/api/rekap/"
+        
+        names_response = requests.get(names_url)
+        names_data = names_response.json()
+
+        wilayah_lv1_response = requests.get(wilayah_lv1_url)
+        wilayah_lv1_data = wilayah_lv1_response.json()
+        
+        # wilayah_lv2_response = requests.get(wilayah_lv2_url)
+        # wilayah_lv2_data = wilayah_lv2_response.json()
+        
+        # wilayah_lv3_response = requests.get(wilayah_lv3_url)
+        # wilayah_lv3_data = wilayah_lv3_response.json()
+        
+        # wilayah_lv4_response = requests.get(wilayah_lv4_url)
+        # wilayah_lv4_data = wilayah_lv4_response.json()
+        
+        # wilayah_response = requests.get(wilayah_lv5_url)
+        # wilayah_data = wilayah_response.json()
+
+        rekap_hasil_response = requests.get(rekap_hasil)
+        rekap_hasil_data = rekap_hasil_response.json()
+
+        if votes_data["chart"] is not None:
+            total_votes = sum(values for key, values in votes_data["chart"].items() if key != "null")
+        else:
+            total_votes = 0
+
+        level_6 = {}
+        for key, value in names_data.items():
+            votes = votes_data["chart"][key] if votes_data["chart"] is not None and key in votes_data["chart"] else 0
+            percentage = votes / total_votes * 100 if total_votes != 0 else 0
+            
+            level_6[key] = {
+                "unique_number": str(value["nomor_urut"]).zfill(2),
+                "capres_name": value["nama"].split(" - ")[0].strip(),
+                "cawapres_name": value["nama"].split(" - ")[1].strip(),
+                "votes": votes,
+                "votes_formatted": "{:,}".format(votes),
+                "percentage": percentage,
+                "percentage_formatted": "{:.2f}%".format(percentage),
+            }
+
+        last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
+        last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
+                
+        if votes_data["chart"] is not None:
+            highest_votes = max(values for key, values in votes_data["chart"].items() if key != "null")
+        else:
+            highest_votes = 0
+        
+        if votes_data["chart"] is not None:
+            for key, values in votes_data["chart"].items():
+                if values == highest_votes:
+                    whose_highest = key
+                    if key == "100025":
+                        whose_highest = f"H. Anies Rasyid Baswedan, Ph.D. with {highest_votes:,} votes"
+                    elif key == "100026":
+                        whose_highest = f"H. Prabowo Subianto with {highest_votes:,} votes"
+                    elif key == "100027":
+                        whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
+                    else:
+                        whose_highest = key
+        else:
+            whose_highest = None
+                
+        if votes_data["chart"] is not None:
+            votes_data_100025 = votes_data["chart"].get("100025")
+            votes_data_100026 = votes_data["chart"].get("100026")
+            votes_data_100027 = votes_data["chart"].get("100027")
+        else:
+            votes_data_100025 = 0
+            votes_data_100026 = 0
+            votes_data_100027 = 0
+        
+        total_votes_data = votes_data_100025 + votes_data_100026 + votes_data_100027
+        
+        if total_votes_data != 0:
+            percentage_votes_data_100025 = (votes_data_100025 / total_votes_data) * 100
+            percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
+            percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
+        else:
+            percentage_votes_data_100025 = 0
+            percentage_votes_data_100026 = 0
+            percentage_votes_data_100027 = 0
+
+        html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
+
+        html_progres = {
+            "html_progress_100025": html_progres_100025,
+            "html_progress_100026": html_progres_100026,
+            "html_progress_100027": html_progress_100027
+        }
+        
+        area_name_lv2 = None
+        for item in wilayah_lv1_data:
+            if item["kode"] == area_code_lv2:
+                area_name_lv2 = item["nama"]
+                break
+
+        area_name_lv3 = None
+        for item in wilayah_lv2_data:
+            if item["kode"] == area_code_lv3:
+                area_name_lv3 = item["nama"]
+                break
+            
+        area_name_lv4 = None
+        for item in wilayah_lv3_data:
+            if item["kode"] == area_code_lv4:
+                area_name_lv4 = item["nama"]
+                break
+        
+        area_name_lv5 = None
+        for item in wilayah_lv4_data:
+            if item["kode"] == area_code_lv5:
+                area_name_lv5 = item["nama"]
+                break
+            
+        area_name_lv6 = None
+        for item in wilayah_data:
+            if item["kode"] == area_code_lv6:
+                area_name_lv6 = item["nama"]
+                break
+        
+        html_images = []
+        if votes_data and "images" in votes_data:
+            for i, image_url in enumerate(votes_data["images"], start=1):
+                if image_url:
+                    html_images.append(f'<div class="swiper-slide" style="background-image: url({image_url})">Slide {i}</div>')
+        else:
+            # Handle the case when "images" key is missing or empty
+            html_images = ['<div class="swiper-slide">No images available</div>']
+            
+        administrasi = votes_data.get("administrasi", {})
+        images = votes_data.get("images", [])
+
+        if administrasi is not None:
+            suara_sah = administrasi.get("suara_sah")
+            suara_tidak_sah = administrasi.get("suara_tidak_sah")
+            suara_total = administrasi.get("suara_total")
+        else:
+            suara_sah = 0
+            suara_tidak_sah = 0
+            suara_total = 0
+        
+        if suara_sah + suara_tidak_sah == suara_total:
+            status_suara = "Votes (suara) - correct count"
+        else:
+            status_suara = "Votes (suara) - wrong count"
+
+        if administrasi is not None:
+            pemilih_dpt_jumlah = administrasi.get("pemilih_dpt_j")
+            pemilih_dpt_laki = administrasi.get("pemilih_dpt_l")
+            pemilih_dpt_perempuan = administrasi.get("pemilih_dpt_p")
+        else:
+            pemilih_dpt_jumlah = 0
+            pemilih_dpt_laki = 0
+            pemilih_dpt_perempuan = 0
+
+        if pemilih_dpt_jumlah == pemilih_dpt_laki + pemilih_dpt_perempuan:
+            status_pemilih_dpt = "Pemilih DPT - correct count"
+        else:
+            status_pemilih_dpt = "Pemilih DPT - wrong count"
+
+        if administrasi is not None:
+            pengguna_dpt_jumlah = administrasi.get("pengguna_dpt_j")
+            pengguna_dpt_laki = administrasi.get("pengguna_dpt_l")
+            pengguna_dpt_perempuan = administrasi.get("pengguna_dpt_p")
+        else:
+            pengguna_dpt_jumlah = 0
+            pengguna_dpt_laki = 0
+            pengguna_dpt_perempuan = 0
+
+        
+        if pengguna_dpt_jumlah == pengguna_dpt_laki + pengguna_dpt_perempuan:
+            status_pengguna_dpt = "Pengguna DPT - correct count"
+        else:
+            status_pengguna_dpt = "Pengguna DPT - wrong count"
+            
+        if administrasi is not None:
+            pengguna_dptb_jumlah = administrasi.get("pengguna_dptb_j")
+            pengguna_dptb_laki = administrasi.get("pengguna_dptb_l")
+            pengguna_dptb_perempuan = administrasi.get("pengguna_dptb_p")
+        else:
+            pengguna_dptb_jumlah = 0
+            pengguna_dptb_laki = 0
+            pengguna_dptb_perempuan = 0
+
+        
+        if pengguna_dptb_jumlah == pengguna_dptb_laki + pengguna_dptb_perempuan:
+            status_pengguna_dptb = "Pengguna DPTB - correct count"
+        else:
+            status_pengguna_dptb = "Pengguna DPTB - wrong count"
+            
+        if administrasi is not None:
+            pengguna_total_jumlah = administrasi.get("pengguna_total_j")
+            pengguna_total_laki = administrasi.get("pengguna_total_l")
+            pengguna_total_perempuan = administrasi.get("pengguna_total_p")
+        else:
+            # Assign default values of 0 when administrasi is None
+            pengguna_total_jumlah = 0
+            pengguna_total_laki = 0
+            pengguna_total_perempuan = 0
+
+        if pengguna_total_jumlah == pengguna_total_laki + pengguna_total_perempuan:
+            status_pengguna_total = "Pengguna Total - correct count"
+        else:
+            status_pengguna_total = "Pengguna Total - wrong count"
+
+        if administrasi is not None:
+            pengguna_non_dpt_jumlah = administrasi.get("pengguna_non_dpt_j")
+            pengguna_non_dpt_laki = administrasi.get("pengguna_non_dpt_l")
+            pengguna_non_dpt_perempuan = administrasi.get("pengguna_non_dpt_p")
+        else:
+            pengguna_non_dpt_jumlah = 0
+            pengguna_non_dpt_laki = 0
+            pengguna_non_dpt_perempuan = 0
+
+        if pengguna_non_dpt_jumlah == pengguna_non_dpt_laki + pengguna_non_dpt_perempuan:
+            status_pengguna_non_dpt = "Pengguna Non DPT - correct count"
+        else:
+            status_pengguna_non_dpt = "Pengguna Non DPT - wrong count"
+
+        if pengguna_total_jumlah == suara_sah + suara_tidak_sah:
+            valid = "valid"
+        else:
+            valid = "invalid"
+
+        modified_administrasi = {
+            "valid": valid,
+            "status_suara": status_suara,
+            "status_pemilih_dpt": status_pemilih_dpt,
+            "status_pengguna_dpt": status_pengguna_dpt,
+            "status_pengguna_dptb": status_pengguna_dptb,
+            "status_pengguna_total": status_pengguna_total,
+            "status_pengguna_non_dpt": status_pengguna_non_dpt,
+
+            "suara_sah_formated": f"{suara_sah:,}",
+            "suara_tidak_sah_formated": f"{suara_tidak_sah:,}",
+            "suara_total_formated": f"{suara_total:,}",
+            "pemilih_dpt_jumlah_formated": f"{pemilih_dpt_jumlah:,}",
+            "pemilih_dpt_laki_formated": f"{pemilih_dpt_laki:,}",
+            "pemilih_dpt_perempuan_formated": f"{pemilih_dpt_perempuan:,}",
+            "pengguna_dpt_jumlah_formated": f"{pengguna_dpt_jumlah:,}",
+            "pengguna_dpt_laki_formated": f"{pengguna_dpt_laki:,}",
+            "pengguna_dpt_perempuan_formated": f"{pengguna_dpt_perempuan:,}",
+            "pengguna_dptb_jumlah_formated": f"{pengguna_dptb_jumlah:,}",
+            "pengguna_dptb_laki_formated": f"{pengguna_dptb_laki:,}",
+            "pengguna_dptb_perempuan_formated": f"{pengguna_dptb_perempuan:,}",
+            "pengguna_total_jumlah_formated": f"{pengguna_total_jumlah:,}",
+            "pengguna_total_laki_formated": f"{pengguna_total_laki:,}",
+            "pengguna_total_perempuan_formated": f"{pengguna_total_perempuan:,}",
+            "pengguna_non_dpt_jumlah_formated": f"{pengguna_non_dpt_jumlah:,}",
+            "pengguna_non_dpt_laki_formated": f"{pengguna_non_dpt_laki:,}",
+            "pengguna_non_dpt_perempuan_formated": f"{pengguna_non_dpt_perempuan:,}",
+        }
+
+        response_data = {
+            "last_update": last_update_formatted,
+            "area_code_lv2": area_code_lv2,
+            "area_name_lv2": area_name_lv2,
+            "area_code_lv3": area_code_lv3,
+            "area_name_lv3": area_name_lv3,
+            "area_code_lv4": area_code_lv4,
+            "area_name_lv4": area_name_lv4,
+            "area_code_lv5": area_code_lv5,
+            "area_name_lv5": area_name_lv5,
+            "area_code_lv6": area_code_lv6,
+            "area_name_lv6": area_name_lv6,
+            "highest_votes": highest_votes,
+            "highest_votes_formatted": "{:,}".format(highest_votes),
+            "whose_highest_votes": whose_highest,
+            "total_votes": total_votes,
+            "total_votes_formatted": "{:,}".format(total_votes),
+            "html_progres": html_progres,
+            "level_6": level_6,
+            "images": images,
+            "administrasi": modified_administrasi, 
+        }
+
+        return Response(response_data)
