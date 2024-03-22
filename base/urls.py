@@ -11,4 +11,5 @@ urlpatterns = [
     path('real-count/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/', views.level5, name='level5'),
     path('real-count/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/<str:area_code_lv6>/', views.level6, name='level6'),
     path('sengketa/', views.sengketa, name='sengketa'),
+    path('rekapitulasi/', views.rekap_hasil1, name='rekapitulasi1'),
 ]
