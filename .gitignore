@@ -4,3 +4,4 @@ __pycache__/
 static/
 test/
 trash/
+db.sqlite3

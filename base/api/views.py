@@ -20,7 +20,12 @@ def getRoutes(request):
         'GET /api/votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>',
         'GET /api/votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>',
         'GET /api/votes/<str:votes_tingkat2>/<str:votes_tingkat3>/<str:votes_tingkat4>/<str:votes_tingkat5>/<str:votes_tingkat6>',
-        'GET /api/level1-api/'
+        'GET /api/level-api/<str:area_code_lv2>/',
+        'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/',
+        'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/',
+        'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/',
+        'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/<str:area_code_lv6>/',
+        
     ]
     return Response(routes)
 
