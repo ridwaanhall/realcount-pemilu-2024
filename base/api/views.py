@@ -1635,7 +1635,6 @@ class HasilRekap2API(APIView):
                 "percentage": rekap_hasil_data["chart"][key] / total_votes * 100,
                 "percentage_formatted": "{:.2f}%".format(rekap_hasil_data["chart"][key] / total_votes * 100),
             }
-            
 
         last_update_timestamp = datetime.strptime(rekap_hasil_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
