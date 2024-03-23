@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+from .Ridwaanhall import DATABASE_API, DATABASE
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -32,7 +33,7 @@ def getRoutes(request):
 
 class Names(APIView):
     def get(self, request, format=None):
-        url = 'https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json'
+        url = DATABASE + 'pemilu/ppwp.json'
         
         try:
             response = requests.get(url)
@@ -44,7 +45,7 @@ class Names(APIView):
 
 class Sengketa(APIView):
     def get(self, request, format=None):
-        url = 'https://sirekap-obj-data.kpu.go.id/pemilu/ds/ppwp.json'
+        url = DATABASE + 'pemilu/ds/ppwp.json'
         
         try:
             response = requests.get(url)
@@ -56,7 +57,7 @@ class Sengketa(APIView):
 
 class WilayahTingkat2(APIView):
     def get(self, request, wilayah_tingkat2, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}.json'
+        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}.json'
         
         try:
             response = requests.get(url)
@@ -68,7 +69,7 @@ class WilayahTingkat2(APIView):
 
 class WilayahTingkat3(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}.json'
+        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}.json'
         
         try:
             response = requests.get(url)
@@ -80,7 +81,7 @@ class WilayahTingkat3(APIView):
 
 class WilayahTingkat4(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}.json'
+        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}.json'
         
         try:
             response = requests.get(url)
@@ -92,7 +93,7 @@ class WilayahTingkat4(APIView):
 
 class WilayahTingkat5(APIView):
     def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, wilayah_tingkat5, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}/{wilayah_tingkat5}.json'
+        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}/{wilayah_tingkat5}.json'
         
         try:
             response = requests.get(url)
@@ -104,7 +105,7 @@ class WilayahTingkat5(APIView):
 
 class VotesTingkat1(APIView):
     def get(self, request, format=None):
-        url = 'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json'
+        url = DATABASE + 'pemilu/hhcw/ppwp.json'
         
         try:
             response = requests.get(url)
@@ -116,7 +117,7 @@ class VotesTingkat1(APIView):
         
 class VotesTingkat2(APIView):
     def get(self, request, votes_tingkat2, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}.json'
+        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}.json'
         
         try:
             response = requests.get(url)
@@ -128,7 +129,7 @@ class VotesTingkat2(APIView):
         
 class VotesTingkat3(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}.json'
+        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}.json'
         
         try:
             response = requests.get(url)
@@ -140,7 +141,7 @@ class VotesTingkat3(APIView):
         
 class VotesTingkat4(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}.json'
+        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}.json'
         
         try:
             response = requests.get(url)
@@ -152,7 +153,7 @@ class VotesTingkat4(APIView):
         
 class VotesTingkat5(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}.json'
+        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}.json'
         
         try:
             response = requests.get(url)
@@ -164,7 +165,7 @@ class VotesTingkat5(APIView):
         
 class VotesTingkat6(APIView):
     def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, votes_tingkat6, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}/{votes_tingkat6}.json'
+        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}/{votes_tingkat6}.json'
         
         try:
             response = requests.get(url)
@@ -176,9 +177,9 @@ class VotesTingkat6(APIView):
 
 class Level1API(APIView):
     def get(self, request, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        votes_lv1_url = "http://127.0.0.1:8000/api/votes/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
+        names_url = DATABASE_API+ "api/names/"
+        votes_lv1_url = DATABASE_API+ "api/votes/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
 
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -305,11 +306,11 @@ class Level1API(APIView):
     
 class Level2API(APIView):
     def get(self, request, area_code_lv2, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        votes_lv1_url = "http://127.0.0.1:8000/api/votes/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        votes_lv2_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/"
-        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
+        names_url = DATABASE_API+ "api/names/"
+        votes_lv1_url = DATABASE_API+ "api/votes/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        votes_lv2_url = DATABASE_API+ f"api/votes/{area_code_lv2}/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
 
 
         names_response = requests.get(names_url)
@@ -475,13 +476,13 @@ class Level2API(APIView):
     
 class Level3API(APIView):
     def get(self, request, area_code_lv2, area_code_lv3, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        votes_lv1_url = "http://127.0.0.1:8000/api/votes/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        votes_lv2_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/"
-        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
-        votes_lv3_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/"
-        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        names_url = DATABASE_API+ "api/names/"
+        votes_lv1_url = DATABASE_API+ "api/votes/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        votes_lv2_url = DATABASE_API+ f"api/votes/{area_code_lv2}/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        votes_lv3_url = DATABASE_API+ f"api/votes/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv3_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/"
         
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -632,12 +633,12 @@ class Level3API(APIView):
     
 class Level4API(APIView):
     def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
-        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
-        wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
-        votes_lv4_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        names_url = DATABASE_API+ "api/names/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        wilayah_lv3_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv4_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        votes_lv4_url = DATABASE_API+ f"api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
         
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -864,13 +865,13 @@ class Level4API(APIView):
     
 class Level5API(APIView):
     def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
-        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
-        wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
-        wilayah_lv5_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
-        votes_lv5_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        names_url = DATABASE_API+ "api/names/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        wilayah_lv3_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv4_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        wilayah_lv5_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        votes_lv5_url = DATABASE_API+ f"api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
         
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -1094,13 +1095,13 @@ class Level5API(APIView):
     
 class Level6API(APIView):
     def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, area_code_lv6, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        wilayah_lv2_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/"
-        wilayah_lv3_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/"
-        wilayah_lv4_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
-        wilayah_lv5_url = f"http://127.0.0.1:8000/api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
-        votes_lv6_url = f"http://127.0.0.1:8000/api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/{area_code_lv6}"
+        names_url = DATABASE_API+ "api/names/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        wilayah_lv3_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/"
+        wilayah_lv4_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/"
+        wilayah_lv5_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/"
+        votes_lv6_url = DATABASE_API+ f"api/votes/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}/{area_code_lv6}"
         
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -1387,7 +1388,7 @@ class Level6API(APIView):
 
 class HasilRekapTingkat1(APIView):
     def get(self, request, format=None):
-        url = 'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp.json'
+        url = DATABASE + 'pemilu/hr/ppwp.json'
 
         try:
             response = requests.get(url)
@@ -1399,7 +1400,7 @@ class HasilRekapTingkat1(APIView):
 
 class HasilRekapTingkat2(APIView):
     def get(self, request, area_code_lv2, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp/{area_code_lv2}.json'
+        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}.json'
 
         try:
             response = requests.get(url)
@@ -1411,7 +1412,7 @@ class HasilRekapTingkat2(APIView):
 
 class HasilRekapTingkat3(APIView):
     def get(self, request, area_code_lv2, area_code_lv3, format=None):
-        url = f'https://sirekap-obj-data.kpu.go.id/pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}.json'
+        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}.json'
 
         try:
             response = requests.get(url)
@@ -1423,9 +1424,9 @@ class HasilRekapTingkat3(APIView):
         
 class HasilRekap1API(APIView):
     def get(self, request, format=None):
-        names_url = "http://127.0.0.1:8000/api/names/"
-        wilayah_lv1_url = "http://127.0.0.1:8000/api/wilayah/0/"
-        rekap_hasil = f"http://127.0.0.1:8000/api/rekap/"
+        names_url = DATABASE_API+ "api/names/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        rekap_hasil = DATABASE_API+ f"api/rekap/"
 
         names_response = requests.get(names_url)
         names_data = names_response.json()
@@ -1450,18 +1451,17 @@ class HasilRekap1API(APIView):
                 "percentage_formatted": "{:.2f}%".format(rekap_hasil_data["chart"][key] / total_votes * 100),
             }
             
-
         last_update_timestamp = datetime.strptime(rekap_hasil_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
         total_child_data = {}
         for key, value in rekap_hasil_data["table"].items():
-            area_code_lv2 = next((item["kode"] for item in wilayah_lv1_data if item["kode"] == key), None)
+            area_code_lv1 = next((item["kode"] for item in wilayah_lv1_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_lv1_data if item["kode"] == key), None)
             area_name = next((item["nama"] for item in wilayah_lv1_data if item["kode"] == key), None)
             level = next((item["tingkat"] for item in wilayah_lv1_data if item["kode"] == key), None)
             total_child_data[key] = {
-                "area_code_lv2": area_code_lv2,
+                "area_code_lv1": area_code_lv1,
                 "area_id": area_id,
                 "area_name": area_name,
                 # "area_progress": value["persen"],
@@ -1532,6 +1532,193 @@ class HasilRekap1API(APIView):
                     "jml_wilayah_publikasi_hasil_prov": jml_wilayah_publikasi_dc,
                     "hasil_prov_formatted": f"{jml_wilayah_dc:,} dari {jml_wilayah_publikasi_dc:,} ({percentage_dc:.2f}%)",
                     "percentage_prov_formatted": f"{percentage_dc:.2f}%",
+                })
+            
+        # total_progress_tps = rekap_hasil_data["progres"]["total"]
+        # progress_tps = rekap_hasil_data["progres"]["progres"]
+
+        # progress_data = {
+        #     "total_tps": total_progress_tps,
+        #     "total_tps_formatted": "{:,}".format(total_progress_tps),
+        #     "progres_tps": progress_tps,
+        #     "progres_tps_formatted": "{:,}".format(progress_tps),
+        #     "percentage_tps": (progress_tps / total_progress_tps) * 100,
+        #     "percentage_tps_formatted": "{:.2f}%".format((progress_tps / total_progress_tps) * 100),
+        # }
+        
+        highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
+        
+        url_formd = rekap_hasil_data["url_formd"]
+        
+        for key, values in rekap_hasil_data["chart"].items():
+            if values == highest_votes:
+                whose_highest = key
+                if key == "100025":
+                    whose_highest = f"H. Anies Rasyid Baswedan, Ph.D. with {highest_votes:,} votes"
+                elif key == "100026":
+                    whose_highest = f"H. Prabowo Subianto with {highest_votes:,} votes"
+                elif key == "100027":
+                    whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
+                else:
+                    whose_highest = key
+        
+        # percentage_tps = (progress_tps / total_progress_tps) * 100
+        
+        votes_data_100025 = rekap_hasil_data["chart"]["100025"]
+        votes_data_100026 = rekap_hasil_data["chart"]["100026"]
+        votes_data_100027 = rekap_hasil_data["chart"]["100027"]
+        
+        total_votes_data = votes_data_100025 + votes_data_100026 + votes_data_100027
+        
+        percentage_votes_data_100025 = (votes_data_100025 / total_votes_data) * 100
+        percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
+        percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
+        
+        # html_progres_tps = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_tps }%' aria-valuenow='{ percentage_tps }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
+        
+        html_progres = {
+            "html_progress_100025": html_progres_100025,
+            "html_progress_100026": html_progres_100026,
+            "html_progress_100027": html_progress_100027
+        }
+        
+        response_data = {
+            "last_update": last_update_formatted,
+            "level_pemilu": "Rekapitulasi Hasil Pemilu",
+            "url_formd": url_formd,
+            "highest_votes": highest_votes,
+            "highest_votes_formatted": "{:,}".format(highest_votes),
+            "whose_highest_votes": whose_highest,
+            "total_votes": total_votes,
+            "total_votes_formatted": "{:,}".format(total_votes),
+            "html_progres": html_progres,
+            # "progress_data": progress_data,
+            "total_data": total_data,
+            "total_child_data": total_child_data
+        }
+
+        return Response(response_data)
+    
+    
+class HasilRekap2API(APIView):
+    def get(self, request, area_code_lv2, format=None):
+        names_url = DATABASE_API+ "api/names/"
+        wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
+        wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        rekap_hasil = DATABASE_API+ f"api/rekap/{area_code_lv2}/"
+
+        names_response = requests.get(names_url)
+        names_data = names_response.json()
+
+        wilayah_lv1_response = requests.get(wilayah_lv1_url)
+        wilayah_lv1_data = wilayah_lv1_response.json()
+        
+        wilayah_lv2_response = requests.get(wilayah_lv2_url)
+        wilayah_lv2_data = wilayah_lv2_response.json()
+
+        rekap_hasil_response = requests.get(rekap_hasil)
+        rekap_hasil_data = rekap_hasil_response.json()
+
+        total_votes = sum(values for key, values in rekap_hasil_data["chart"].items() if key != "persen")
+
+        total_data = {}
+        for key, value in names_data.items():
+            total_data[key] = {
+                "unique_number": str(value["nomor_urut"]).zfill(2),
+                "capres_name": value["nama"].split(" - ")[0].strip(),
+                "cawapres_name": value["nama"].split(" - ")[1].strip(),
+                "votes": rekap_hasil_data["chart"][key],
+                "votes_formatted": "{:,}".format(rekap_hasil_data["chart"][key]),
+                "percentage": rekap_hasil_data["chart"][key] / total_votes * 100,
+                "percentage_formatted": "{:.2f}%".format(rekap_hasil_data["chart"][key] / total_votes * 100),
+            }
+            
+
+        last_update_timestamp = datetime.strptime(rekap_hasil_data["ts"], "%Y-%m-%d %H:%M:%S")
+        last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
+
+        total_child_data = {}
+        for key, value in rekap_hasil_data["table"].items():
+            area_code_lv1 = next((item["kode"] for item in wilayah_lv2_data if item["kode"] == key), None)
+            area_id = next((item["id"] for item in wilayah_lv2_data if item["kode"] == key), None)
+            area_name = next((item["nama"] for item in wilayah_lv2_data if item["kode"] == key), None)
+            level = next((item["tingkat"] for item in wilayah_lv2_data if item["kode"] == key), None)
+            total_child_data[key] = {
+                # "area_code_lv1": area_code_lv1,
+                "area_code_lv2": area_code_lv2,
+                "area_id": area_id,
+                "area_name": area_name,
+                # "area_progress": value["persen"],
+                # "area_progress_formatted": "{:.2f}%".format(value["persen"]),
+                "level": level,
+                "100025": value["100025"],
+                "100025_formatted": "{:,}".format(value["100025"]),
+                "100025_percentage": (value["100025"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100025_percentage_formatted": "{:.2f}%".format((value["100025"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "100026": value["100026"],
+                "100026_formatted": "{:,}".format(value["100026"]),
+                "100026_percentage": (value["100026"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100026_percentage_formatted": "{:.2f}%".format((value["100026"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "100027": value["100027"],
+                "100027_formatted": "{:,}".format(value["100027"]),
+                "100027_percentage": (value["100027"] / (value["100025"] + value["100026"] + value["100027"])) * 100,
+                "100027_percentage_formatted": "{:.2f}%".format((value["100027"] / (value["100025"] + value["100026"] + value["100027"])) * 100),
+                "total_area_votes": value["100025"] + value["100026"] + value["100027"],
+                "total_area_votes_formatted": "{:,}".format(value["100025"] + value["100026"] + value["100027"])
+            }
+            
+            if key in rekap_hasil_data["progress_d_child"]:
+                persen_da = rekap_hasil_data["progress_d_child"][key]["da"]["persen"]
+                jml_wilayah_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah"]
+                jml_wilayah_publikasi_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah_publikasi"]
+                
+                if jml_wilayah_publikasi_da != 0:
+                    percentage_da = (jml_wilayah_publikasi_da / jml_wilayah_da) * 100
+                else:
+                    percentage_da = 0
+                
+                persen_db = rekap_hasil_data["progress_d_child"][key]["db"]["persen"]
+                jml_wilayah_db = rekap_hasil_data["progress_d_child"][key]["db"]["jml_wilayah"]
+                jml_wilayah_publikasi_db = rekap_hasil_data["progress_d_child"][key]["db"]["jml_wilayah_publikasi"]
+
+                if jml_wilayah_publikasi_db != 0:
+                    percentage_db = (jml_wilayah_publikasi_db / jml_wilayah_db) * 100
+                else:
+                    percentage_db = 0
+                
+                # persen_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["persen"]
+                # jml_wilayah_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["jml_wilayah"]
+                # jml_wilayah_publikasi_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["jml_wilayah_publikasi"]
+                
+                # if jml_wilayah_publikasi_dc != 0:
+                #     percentage_dc = (jml_wilayah_publikasi_dc / jml_wilayah_dc) * 100
+                # else:
+                #     percentage_dc = 0
+                
+                total_child_data[key].update({
+                    "persen_hasil_kec": persen_da,
+                    "percentage_kec": percentage_da,
+                    "jml_wilayah_hasil_kec": jml_wilayah_da,
+                    "jml_wilayah_publikasi_hasil_kec": jml_wilayah_publikasi_da,
+                    "hasil_kec_formatted": f"{jml_wilayah_da:,} dari {jml_wilayah_publikasi_da:,} ({percentage_da:.2f}%)",
+                    "percentage_kec_formatted": f"{percentage_da:.2f}%",
+                    
+                    "persen_hasil_kab_kota": persen_db,
+                    "percentage_kab_kota": percentage_db,
+                    "jml_wilayah_hasil_kab_kota": jml_wilayah_db,
+                    "jml_wilayah_publikasi_hasil_kab_kota": jml_wilayah_publikasi_db,
+                    "hasil_kab_kota_formatted": f"{jml_wilayah_db:,} dari {jml_wilayah_publikasi_db:,} ({percentage_db:.2f}%)",
+                    "percentage_kab_kota_formatted": f"{percentage_db:.2f}%",
+                    
+                    # "persen_hasil_prov": persen_dc,
+                    # "percentage_prov": percentage_dc,
+                    # "jml_wilayah_hasil_prov": jml_wilayah_dc,
+                    # "jml_wilayah_publikasi_hasil_prov": jml_wilayah_publikasi_dc,
+                    # "hasil_prov_formatted": f"{jml_wilayah_dc:,} dari {jml_wilayah_publikasi_dc:,} ({percentage_dc:.2f}%)",
+                    # "percentage_prov_formatted": f"{percentage_dc:.2f}%",
                 })
             
         # total_progress_tps = rekap_hasil_data["progres"]["total"]

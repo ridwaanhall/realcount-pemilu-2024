@@ -8,6 +8,7 @@ urlpatterns = [
     
     path('sengketa/', views.Sengketa.as_view(), name='sengketa_api'),
     
+    # path('wilayah/', views.WilayahTingkat1.as_view(), name='wilayah_tingkat_1'),
     path('wilayah/<str:wilayah_tingkat2>/', views.WilayahTingkat2.as_view(), name='wilayah_tingkat_2'),
     path('wilayah/<str:wilayah_tingkat2>/<str:wilayah_tingkat3>/', views.WilayahTingkat3.as_view(), name='wilayah_tingkat_3'),
     path('wilayah/<str:wilayah_tingkat2>/<str:wilayah_tingkat3>/<str:wilayah_tingkat4>/', views.WilayahTingkat4.as_view(), name='wilayah_tingkat_4'),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('rekap/<str:area_code_lv2>/<str:area_code_lv3>/', views.HasilRekapTingkat3.as_view(), name='rekap_3'),
     
     path('rekap-api/', views.HasilRekap1API.as_view(), name='rekap_api_1'),
+    path('rekap-api/<str:area_code_lv2>/', views.HasilRekap2API.as_view(), name='rekap_api_2'),
 ]
