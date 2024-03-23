@@ -192,9 +192,9 @@ class Level1API(APIView):
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
         
-        level_1 = {}
+        total_data = {}
         for key, value in names_data.items():
-            level_1[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -208,13 +208,13 @@ class Level1API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        level_2 = {}
+        total_child_data = {}
         for key, value in votes_data["table"].items():
             area_code_lv2 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
             area_name = next((item["nama"] for item in wilayah_data if item["kode"] == key), None)
             level = next((item["tingkat"] for item in wilayah_data if item["kode"] == key), None)
-            level_2[key] = {
+            total_child_data[key] = {
                 "area_code_lv2": area_code_lv2,
                 "area_id": area_id,
                 "area_name": area_name,
@@ -297,8 +297,8 @@ class Level1API(APIView):
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
             "progress_data": progress_data,
-            "level_1": level_1,
-            "level_2": level_2
+            "total_data": total_data,
+            "total_child_data": total_child_data
         }
 
         return Response(response_data)
@@ -327,9 +327,9 @@ class Level2API(APIView):
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
         
-        level_2 = {}
+        total_data = {}
         for key, value in names_data.items():
-            level_2[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -343,7 +343,7 @@ class Level2API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        level_3 = {}
+        total_child_data = {}
         for key, value in votes_data["table"].items():
             area_code_lv3 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
@@ -353,7 +353,7 @@ class Level2API(APIView):
             total_votes = value.get("100025", 0) + value.get("100026", 0) + value.get("100027", 0)
             
             if total_votes != 0:
-                level_3[key] = {
+                total_child_data[key] = {
                     "code_lv2": area_code_lv2,
                     "area_code_lv3": area_code_lv3,
                     "area_id": area_id,
@@ -377,7 +377,7 @@ class Level2API(APIView):
                     "total_area_votes_formatted": "{:,}".format(total_votes)
                 }
             else:
-                level_3[key] = {
+                total_child_data[key] = {
                     "code_lv2": area_code_lv2,
                     "area_code_lv3": area_code_lv3,
                     "area_id": area_id,
@@ -467,8 +467,8 @@ class Level2API(APIView):
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
             "progress_data": progress_data,
-            "level_2": level_2,
-            "level_3": level_3
+            "total_data": total_data,
+            "total_child_data": total_child_data
         }
 
         return Response(response_data)
@@ -501,9 +501,9 @@ class Level3API(APIView):
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
                 
-        level_3 = {}
+        total_data = {}
         for key, value in names_data.items():
-            level_3[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -516,7 +516,7 @@ class Level3API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        level_4 = {}
+        total_child_data = {}
         for key, value in votes_data["table"].items():
             area_code_lv4 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
@@ -524,7 +524,7 @@ class Level3API(APIView):
             level = next((item["tingkat"] for item in wilayah_data if item["kode"] == key), None)
             total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen")
             
-            level_4[key] = {
+            total_child_data[key] = {
                 "code_lv2": area_code_lv2,
                 "area_code_lv3": area_code_lv3,
                 "area_code_lv4": area_code_lv4,
@@ -624,8 +624,8 @@ class Level3API(APIView):
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
             "progress_data": progress_data,
-            "level_3": level_3,
-            "level_4": level_4
+            "total_data": total_data,
+            "total_child_data": total_child_data
         }
 
         return Response(response_data)
@@ -660,12 +660,12 @@ class Level4API(APIView):
 
         total_votes = sum(values for key, values in votes_data["chart"].items() if key != "persen") if votes_data["chart"] is not None else 0
         
-        level_4 = {}
+        total_data = {}
         for key, value in names_data.items():
             votes = votes_data["chart"][key] if votes_data["chart"] is not None and key in votes_data["chart"] else 0
             percentage = votes / total_votes * 100 if total_votes != 0 else 0
             
-            level_4[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -679,7 +679,7 @@ class Level4API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        level_5 = {}
+        total_child_data = {}
         for key, value in votes_data["table"].items():
             area_code_lv5 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
@@ -691,7 +691,7 @@ class Level4API(APIView):
             total_votes_denominator = value.get("100025", 0) + value.get("100026", 0) + value.get("100027", 0)
 
             if total_votes_denominator != 0:
-                level_5[key] = {
+                total_child_data[key] = {
                     "code_lv2": area_code_lv2,
                     "area_code_lv3": area_code_lv3,
                     "area_code_lv4": area_code_lv4,
@@ -717,7 +717,7 @@ class Level4API(APIView):
                     "total_area_votes_formatted": "{:,}".format(total_votes_denominator)
                 }
             else:
-                level_5[key] = {
+                total_child_data[key] = {
                     "code_lv2": area_code_lv2,
                     "area_code_lv3": area_code_lv3,
                     "area_code_lv4": area_code_lv4,
@@ -856,8 +856,8 @@ class Level4API(APIView):
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
             "progress_data": progress_data,
-            "level_4": level_4,
-            "level_5": level_5
+            "total_data": total_data,
+            "total_child_data": total_child_data
         }
 
         return Response(response_data)
@@ -900,12 +900,12 @@ class Level5API(APIView):
             total_votes = 0
 
         
-        level_5 = {}
+        total_data = {}
         for key, value in names_data.items():
             votes = votes_data["chart"][key] if votes_data["chart"] is not None and key in votes_data["chart"] else 0
             percentage = votes / total_votes * 100 if total_votes != 0 else 0
             
-            level_5[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -919,7 +919,7 @@ class Level5API(APIView):
         last_update_timestamp = datetime.strptime(votes_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
-        level_6 = {}
+        total_child_data = {}
         for key, value in votes_data["table"].items():
             area_code_lv6 = next((item["kode"] for item in wilayah_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_data if item["kode"] == key), None)
@@ -930,7 +930,7 @@ class Level5API(APIView):
             votes_100026 = value.get("100026", 0)
             votes_100027 = value.get("100027", 0)
 
-            level_6[key] = {
+            total_child_data[key] = {
                 "code_lv2": area_code_lv2,
                 "area_code_lv3": area_code_lv3,
                 "area_code_lv4": area_code_lv4,
@@ -1086,8 +1086,8 @@ class Level5API(APIView):
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
             "progress_data": progress_data,
-            "level_5": level_5,
-            "level_6": level_6
+            "total_data": total_data,
+            "total_child_data": total_child_data
         }
 
         return Response(response_data)
@@ -1129,12 +1129,12 @@ class Level6API(APIView):
         else:
             total_votes = 0
 
-        level_6 = {}
+        total_data = {}
         for key, value in names_data.items():
             votes = votes_data["chart"][key] if votes_data["chart"] is not None and key in votes_data["chart"] else 0
             percentage = votes / total_votes * 100 if total_votes != 0 else 0
             
-            level_6[key] = {
+            total_data[key] = {
                 "unique_number": str(value["nomor_urut"]).zfill(2),
                 "capres_name": value["nama"].split(" - ")[0].strip(),
                 "cawapres_name": value["nama"].split(" - ")[1].strip(),
@@ -1378,7 +1378,7 @@ class Level6API(APIView):
             "total_votes": total_votes,
             "total_votes_formatted": "{:,}".format(total_votes),
             "html_progres": html_progres,
-            "level_6": level_6,
+            "total_data": total_data,
             "images": images,
             "administrasi": modified_administrasi, 
         }
@@ -1574,12 +1574,27 @@ class HasilRekap1API(APIView):
         percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
         percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
         
-        # html_progres_tps = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_tps }%' aria-valuenow='{ percentage_tps }' aria-valuemin='0' aria-valuemax='100'></div>"
+        progress_d = rekap_hasil_data.get("progress_d", {})
+        persen = progress_d.get("da", {}).get("persen")
+        jml_wilayah = progress_d.get("da", {}).get("jml_wilayah")
+        jml_wilayah_publikasi = progress_d.get("da", {}).get("jml_wilayah_publikasi")
+        
+        percentage_wilayah_d = (jml_wilayah_publikasi / jml_wilayah) * 100
+        
+        html_progres_wilayah = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_wilayah_d }%' aria-valuenow='{ percentage_wilayah_d }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
         
+        progress_data = {
+            "persen": persen,
+            "jml_wilayah": jml_wilayah,
+            "jml_wilayah_publikasi": jml_wilayah_publikasi,
+            "percentage_wilayah_d": "{:.2f}%".format(percentage_wilayah_d),
+        }
+        
         html_progres = {
+            "html_progres_wilayah": html_progres_wilayah,
             "html_progress_100025": html_progres_100025,
             "html_progress_100026": html_progres_100026,
             "html_progress_100027": html_progress_100027
@@ -1587,15 +1602,15 @@ class HasilRekap1API(APIView):
         
         response_data = {
             "last_update": last_update_formatted,
-            "level_pemilu": "Rekapitulasi Hasil Pemilu",
-            "url_formd": url_formd,
+            "level_pemilu": "NASIONAL",
             "highest_votes": highest_votes,
             "highest_votes_formatted": "{:,}".format(highest_votes),
             "whose_highest_votes": whose_highest,
             "total_votes": total_votes,
             "total_votes_formatted": "{:,}".format(total_votes),
+            "url_formd": rekap_hasil_data.get("url_formd", [])[0],
             "html_progres": html_progres,
-            # "progress_data": progress_data,
+            "progress_data": progress_data,
             "total_data": total_data,
             "total_child_data": total_child_data
         }
@@ -1623,7 +1638,7 @@ class HasilRekap2API(APIView):
         rekap_hasil_data = rekap_hasil_response.json()
 
         total_votes = sum(values for key, values in rekap_hasil_data["chart"].items() if key != "persen")
-
+        
         total_data = {}
         for key, value in names_data.items():
             total_data[key] = {
@@ -1635,19 +1650,19 @@ class HasilRekap2API(APIView):
                 "percentage": rekap_hasil_data["chart"][key] / total_votes * 100,
                 "percentage_formatted": "{:.2f}%".format(rekap_hasil_data["chart"][key] / total_votes * 100),
             }
-
+            
         last_update_timestamp = datetime.strptime(rekap_hasil_data["ts"], "%Y-%m-%d %H:%M:%S")
         last_update_formatted = last_update_timestamp.strftime("%d %B %Y %H:%M:%S WIB")
 
         total_child_data = {}
         for key, value in rekap_hasil_data["table"].items():
-            area_code_lv1 = next((item["kode"] for item in wilayah_lv2_data if item["kode"] == key), None)
+            area_code_lv3 = next((item["kode"] for item in wilayah_lv2_data if item["kode"] == key), None)
             area_id = next((item["id"] for item in wilayah_lv2_data if item["kode"] == key), None)
             area_name = next((item["nama"] for item in wilayah_lv2_data if item["kode"] == key), None)
             level = next((item["tingkat"] for item in wilayah_lv2_data if item["kode"] == key), None)
             total_child_data[key] = {
-                # "area_code_lv1": area_code_lv1,
-                "area_code_lv2": area_code_lv2,
+                "code_lv2": area_code_lv2,
+                "area_code_lv3": area_code_lv3,
                 "area_id": area_id,
                 "area_name": area_name,
                 # "area_progress": value["persen"],
@@ -1760,28 +1775,50 @@ class HasilRekap2API(APIView):
         percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
         percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
         
-        # html_progres_tps = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_tps }%' aria-valuenow='{ percentage_tps }' aria-valuemin='0' aria-valuemax='100'></div>"
+        progress_d = rekap_hasil_data.get("progress_d", {})
+        persen = progress_d.get("da", {}).get("persen")
+        jml_wilayah = progress_d.get("da", {}).get("jml_wilayah")
+        jml_wilayah_publikasi = progress_d.get("da", {}).get("jml_wilayah_publikasi")
+        
+        percentage_wilayah_d = (jml_wilayah_publikasi / jml_wilayah) * 100
+        
+        html_progres_wilayah = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_wilayah_d }%' aria-valuenow='{ percentage_wilayah_d }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
         
+        progress_data = {
+            "persen": persen,
+            "jml_wilayah": jml_wilayah,
+            "jml_wilayah_publikasi": jml_wilayah_publikasi,
+            "percentage_wilayah_d": "{:.2f}%".format(percentage_wilayah_d),
+        }
+        
         html_progres = {
+            "html_progres_wilayah": html_progres_wilayah,
             "html_progress_100025": html_progres_100025,
             "html_progress_100026": html_progres_100026,
             "html_progress_100027": html_progress_100027
         }
         
+        area_name_lv2 = None
+        for item in wilayah_lv1_data:
+            if item["kode"] == area_code_lv2:
+                area_name_lv2 = item["nama"]
+                break
+        
         response_data = {
             "last_update": last_update_formatted,
-            "level_pemilu": "Rekapitulasi Hasil Pemilu",
-            "url_formd": url_formd,
+            "level_pemilu": "NASIONAL",
+            "area_name_lv2": area_name_lv2,
             "highest_votes": highest_votes,
             "highest_votes_formatted": "{:,}".format(highest_votes),
             "whose_highest_votes": whose_highest,
             "total_votes": total_votes,
             "total_votes_formatted": "{:,}".format(total_votes),
+            "url_formd": rekap_hasil_data.get("url_formd", [])[0],
             "html_progres": html_progres,
-            # "progress_data": progress_data,
+            "progress_data": progress_data,
             "total_data": total_data,
             "total_child_data": total_child_data
         }
