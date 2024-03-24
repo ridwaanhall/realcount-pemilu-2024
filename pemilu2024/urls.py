@@ -24,7 +24,7 @@ from django.urls import path, include
 #     return HttpResponse("room ridwaanhall")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('', include('base.urls')),
     path('api/', include('base.api.urls')),
 ]
