@@ -307,10 +307,9 @@ class Level1API(APIView):
 class Level2API(APIView):
     def get(self, request, area_code_lv2, format=None):
         names_url = DATABASE_API+ "api/names/"
-        votes_lv1_url = DATABASE_API+ "api/votes/"
         wilayah_lv1_url = DATABASE_API+ "api/wilayah/0/"
-        votes_lv2_url = DATABASE_API+ f"api/votes/{area_code_lv2}/"
         wilayah_lv2_url = DATABASE_API+ f"api/wilayah/{area_code_lv2}/"
+        votes_lv2_url = DATABASE_API+ f"api/votes/{area_code_lv2}/"
 
 
         names_response = requests.get(names_url)
@@ -1233,7 +1232,6 @@ class Level6API(APIView):
                 if image_url:
                     html_images.append(f'<div class="swiper-slide" style="background-image: url({image_url})">Slide {i}</div>')
         else:
-            # Handle the case when "images" key is missing or empty
             html_images = ['<div class="swiper-slide">No images available</div>']
             
         administrasi = votes_data.get("administrasi", {})
@@ -1302,7 +1300,6 @@ class Level6API(APIView):
             pengguna_total_laki = administrasi.get("pengguna_total_l")
             pengguna_total_perempuan = administrasi.get("pengguna_total_p")
         else:
-            # Assign default values of 0 when administrasi is None
             pengguna_total_jumlah = 0
             pengguna_total_laki = 0
             pengguna_total_perempuan = 0
@@ -1573,9 +1570,7 @@ class HasilRekap1API(APIView):
                     whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
                 else:
                     whose_highest = key
-        
-        # percentage_tps = (progress_tps / total_progress_tps) * 100
-        
+                
         votes_data_100025 = rekap_hasil_data["chart"]["100025"]
         votes_data_100026 = rekap_hasil_data["chart"]["100026"]
         votes_data_100027 = rekap_hasil_data["chart"]["100027"]
@@ -1713,15 +1708,6 @@ class HasilRekap2API(APIView):
                 else:
                     percentage_db = 0
                 
-                # persen_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["persen"]
-                # jml_wilayah_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["jml_wilayah"]
-                # jml_wilayah_publikasi_dc = rekap_hasil_data["progress_d_child"][key]["dc"]["jml_wilayah_publikasi"]
-                
-                # if jml_wilayah_publikasi_dc != 0:
-                #     percentage_dc = (jml_wilayah_publikasi_dc / jml_wilayah_dc) * 100
-                # else:
-                #     percentage_dc = 0
-                
                 total_child_data[key].update({
                     "persen_hasil_kec": persen_da,
                     "percentage_kec": percentage_da,
@@ -1736,13 +1722,6 @@ class HasilRekap2API(APIView):
                     "jml_wilayah_publikasi_hasil_kab_kota": jml_wilayah_publikasi_db,
                     "hasil_kab_kota_formatted": f"{jml_wilayah_db:,} dari {jml_wilayah_publikasi_db:,} ({percentage_db:.2f}%)",
                     "percentage_kab_kota_formatted": f"{percentage_db:.2f}%",
-                    
-                    # "persen_hasil_prov": persen_dc,
-                    # "percentage_prov": percentage_dc,
-                    # "jml_wilayah_hasil_prov": jml_wilayah_dc,
-                    # "jml_wilayah_publikasi_hasil_prov": jml_wilayah_publikasi_dc,
-                    # "hasil_prov_formatted": f"{jml_wilayah_dc:,} dari {jml_wilayah_publikasi_dc:,} ({percentage_dc:.2f}%)",
-                    # "percentage_prov_formatted": f"{percentage_dc:.2f}%",
                 })
             
 
@@ -1763,7 +1742,6 @@ class HasilRekap2API(APIView):
                 else:
                     whose_highest = key
         
-        # percentage_tps = (progress_tps / total_progress_tps) * 100
         
         votes_data_100025 = rekap_hasil_data["chart"]["100025"]
         votes_data_100026 = rekap_hasil_data["chart"]["100026"]
@@ -1933,9 +1911,7 @@ class HasilRekap3API(APIView):
                     whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
                 else:
                     whose_highest = key
-        
-        # percentage_tps = (progress_tps / total_progress_tps) * 100
-        
+                
         votes_data_100025 = rekap_hasil_data["chart"]["100025"]
         votes_data_100026 = rekap_hasil_data["chart"]["100026"]
         votes_data_100027 = rekap_hasil_data["chart"]["100027"]
@@ -2080,27 +2056,6 @@ class HasilRekap4API(APIView):
                 "total_area_votes": value["100025"] + value["100026"] + value["100027"],
                 "total_area_votes_formatted": "{:,}".format(value["100025"] + value["100026"] + value["100027"])
             }
-            
-            # if key in rekap_hasil_data["progress_d_child"]:
-            #     persen_da = rekap_hasil_data["progress_d_child"][key]["da"]["persen"]
-            #     jml_wilayah_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah"]
-            #     jml_wilayah_publikasi_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah_publikasi"]
-                
-            #     if jml_wilayah_publikasi_da != 0:
-            #         percentage_da = (jml_wilayah_publikasi_da / jml_wilayah_da) * 100
-            #     else:
-            #         percentage_da = 0
-                
-            #     total_child_data[key].update({
-            #         "persen_hasil_kec": persen_da,
-            #         "percentage_kec": percentage_da,
-            #         "jml_wilayah_hasil_kec": jml_wilayah_da,
-            #         "jml_wilayah_publikasi_hasil_kec": jml_wilayah_publikasi_da,
-            #         "hasil_kec_formatted": f"{jml_wilayah_da:,} dari {jml_wilayah_publikasi_da:,} ({percentage_da:.2f}%)",
-            #         "percentage_kec_formatted": f"{percentage_da:.2f}%",
-            #     })
-            
-
         
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
         
@@ -2117,9 +2072,7 @@ class HasilRekap4API(APIView):
                     whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
                 else:
                     whose_highest = key
-        
-        # percentage_tps = (progress_tps / total_progress_tps) * 100
-        
+                
         votes_data_100025 = rekap_hasil_data["chart"]["100025"]
         votes_data_100026 = rekap_hasil_data["chart"]["100026"]
         votes_data_100027 = rekap_hasil_data["chart"]["100027"]
@@ -2278,27 +2231,6 @@ class HasilRekap5API(APIView):
                 "total_area_votes_formatted": "{:,}".format(value["100025"] + value["100026"] + value["100027"])
             }
             
-            # if key in rekap_hasil_data["progress_d_child"]:
-            #     persen_da = rekap_hasil_data["progress_d_child"][key]["da"]["persen"]
-            #     jml_wilayah_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah"]
-            #     jml_wilayah_publikasi_da = rekap_hasil_data["progress_d_child"][key]["da"]["jml_wilayah_publikasi"]
-                
-            #     if jml_wilayah_publikasi_da != 0:
-            #         percentage_da = (jml_wilayah_publikasi_da / jml_wilayah_da) * 100
-            #     else:
-            #         percentage_da = 0
-                
-            #     total_child_data[key].update({
-            #         "persen_hasil_kec": persen_da,
-            #         "percentage_kec": percentage_da,
-            #         "jml_wilayah_hasil_kec": jml_wilayah_da,
-            #         "jml_wilayah_publikasi_hasil_kec": jml_wilayah_publikasi_da,
-            #         "hasil_kec_formatted": f"{jml_wilayah_da:,} dari {jml_wilayah_publikasi_da:,} ({percentage_da:.2f}%)",
-            #         "percentage_kec_formatted": f"{percentage_da:.2f}%",
-            #     })
-            
-
-        
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
         
         url_formd = rekap_hasil_data["url_formd"]
@@ -2314,9 +2246,7 @@ class HasilRekap5API(APIView):
                     whose_highest = f"H. Ganjar Pranowo, S.H., M.I.P. with {highest_votes:,} votes"
                 else:
                     whose_highest = key
-        
-        # percentage_tps = (progress_tps / total_progress_tps) * 100
-        
+                
         votes_data_100025 = rekap_hasil_data["chart"]["100025"]
         votes_data_100026 = rekap_hasil_data["chart"]["100026"]
         votes_data_100027 = rekap_hasil_data["chart"]["100027"]
@@ -2327,27 +2257,14 @@ class HasilRekap5API(APIView):
         percentage_votes_data_100026 = (votes_data_100026 / total_votes_data) * 100
         percentage_votes_data_100027 = (votes_data_100027 / total_votes_data) * 100
         
-        # progress_d = rekap_hasil_data.get("progress_d", {})
-        # persen = progress_d.get("da", {}).get("persen")
-        # jml_wilayah = progress_d.get("da", {}).get("jml_wilayah")
-        # jml_wilayah_publikasi = progress_d.get("da", {}).get("jml_wilayah_publikasi")
-        
-        # percentage_wilayah_d = (jml_wilayah_publikasi / jml_wilayah) * 100
-        
-        # html_progres_wilayah = f"<div class='progress-bar bg-success' role='progressbar' style='width: { percentage_wilayah_d }%' aria-valuenow='{ percentage_wilayah_d }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100025 = f"<div class='progress-bar bg-secondary' role='progressbar' style='width: { percentage_votes_data_100025 }%' aria-valuenow='{ percentage_votes_data_100025 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progres_100026 = f"<div class='progress-bar bg-primary' role='progressbar' style='width: { percentage_votes_data_100026 }%' aria-valuenow='{ percentage_votes_data_100026 }' aria-valuemin='0' aria-valuemax='100'></div>"
         html_progress_100027 = f"<div class='progress-bar bg-danger' role='progressbar' style='width: { percentage_votes_data_100027 }%' aria-valuenow='{ percentage_votes_data_100027 }' aria-valuemin='0' aria-valuemax='100'></div>"
         
         progress_data = {
-            # "persen": persen,
-            # "jml_wilayah": jml_wilayah,
-            # "jml_wilayah_publikasi": jml_wilayah_publikasi,
-            # "percentage_wilayah_d": "{:.2f}%".format(percentage_wilayah_d),
         }
         
         html_progres = {
-            # "html_progres_wilayah": html_progres_wilayah,
             "html_progress_100025": html_progres_100025,
             "html_progress_100026": html_progres_100026,
             "html_progress_100027": html_progress_100027

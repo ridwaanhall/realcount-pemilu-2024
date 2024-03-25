@@ -8,7 +8,6 @@ urlpatterns = [
     
     path('sengketa/', views.Sengketa.as_view(), name='sengketa_api'),
     
-    # path('wilayah/', views.WilayahTingkat1.as_view(), name='wilayah_tingkat_1'),
     path('wilayah/<str:wilayah_tingkat2>/', views.WilayahTingkat2.as_view(), name='wilayah_tingkat_2'),
     path('wilayah/<str:wilayah_tingkat2>/<str:wilayah_tingkat3>/', views.WilayahTingkat3.as_view(), name='wilayah_tingkat_3'),
     path('wilayah/<str:wilayah_tingkat2>/<str:wilayah_tingkat3>/<str:wilayah_tingkat4>/', views.WilayahTingkat4.as_view(), name='wilayah_tingkat_4'),

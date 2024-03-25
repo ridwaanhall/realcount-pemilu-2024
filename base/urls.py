@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # make / redirect to level
     path('', views.home, name='home'),
     path('hitung-suara/', views.level1, name='level1'),
     path('hitung-suara/<str:area_code_lv2>/', views.level2, name='level2'),
