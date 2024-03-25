@@ -10,7 +10,7 @@ def level1(request):
         context = response.json()
         return render(request, 'base/level1.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def level2(request, area_code_lv2):
@@ -21,7 +21,7 @@ def level2(request, area_code_lv2):
         context = response.json()
         return render(request, 'base/level2.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def level3(request, area_code_lv2, area_code_lv3):
@@ -32,7 +32,7 @@ def level3(request, area_code_lv2, area_code_lv3):
         context = response.json()
         return render(request, 'base/level3.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def level4(request, area_code_lv2, area_code_lv3, area_code_lv4):
@@ -43,7 +43,7 @@ def level4(request, area_code_lv2, area_code_lv3, area_code_lv4):
         context = response.json()
         return render(request, 'base/level4.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def level5(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5):
@@ -54,7 +54,7 @@ def level5(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5):
         context = response.json()
         return render(request, 'base/level5.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
     
     
@@ -66,7 +66,7 @@ def level6(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, 
         context = response.json()
         return render(request, 'base/level6.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def sengketa(request):
@@ -78,7 +78,7 @@ def sengketa(request):
         context = {'json_data': json_data}
         return render(request, 'base/sengketa.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def rekap_hasil1(request):
@@ -88,7 +88,7 @@ def rekap_hasil1(request):
         context = response.json()
         return render(request, 'base/rekap_hasil1.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
     
 def rekap_hasil2(request, area_code_lv2):
@@ -98,7 +98,7 @@ def rekap_hasil2(request, area_code_lv2):
         context = response.json()
         return render(request, 'base/rekap_hasil2.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def rekap_hasil3(request, area_code_lv2, area_code_lv3):
@@ -108,7 +108,7 @@ def rekap_hasil3(request, area_code_lv2, area_code_lv3):
         context = response.json()
         return render(request, 'base/rekap_hasil3.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
     
 def rekap_hasil4(request, area_code_lv2, area_code_lv3, area_code_lv4):
@@ -118,7 +118,7 @@ def rekap_hasil4(request, area_code_lv2, area_code_lv3, area_code_lv4):
         context = response.json()
         return render(request, 'base/rekap_hasil4.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
     
 def rekap_hasil5(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5):
@@ -128,7 +128,7 @@ def rekap_hasil5(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code
         context = response.json()
         return render(request, 'base/rekap_hasil5.html', context)
     else:
-        error_message = f"Failed to fetch data from {url}. Status code: {response.status_code}"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
         return render(request, 'base/error.html', {'error_message': error_message})
     
 def about_us(request):
