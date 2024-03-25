@@ -34,4 +34,5 @@ urlpatterns = [
     
     path('rekap-api/', views.HasilRekap1API.as_view(), name='rekap_api_1'),
     path('rekap-api/<str:area_code_lv2>/', views.HasilRekap2API.as_view(), name='rekap_api_2'),
+    path('rekap-api/<str:area_code_lv2>/<str:area_code_lv3>/', views.HasilRekap3API.as_view(), name='rekap_api_3'),
 ]
