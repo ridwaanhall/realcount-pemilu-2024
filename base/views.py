@@ -134,5 +134,8 @@ def rekap_hasil5(request, area_code_lv2, area_code_lv3, area_code_lv4, area_code
 def about_us(request):
     return render(request, 'base/about_us.html')
 
+def home(request):
+    return render(request, 'base/home.html')
+
 def cek_doang(request):
     pass

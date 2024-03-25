@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # make / redirect to level
-    path('', views.level1, name='home'),
+    path('', views.home, name='home'),
     path('hitung-suara/', views.level1, name='level1'),
     path('hitung-suara/<str:area_code_lv2>/', views.level2, name='level2'),
     path('hitung-suara/<str:area_code_lv2>/<str:area_code_lv3>/', views.level3, name='level3'),
