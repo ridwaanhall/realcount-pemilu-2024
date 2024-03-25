@@ -10,7 +10,7 @@ def level1(request):
         context = response.json()
         return render(request, 'base/level1.html', context)
     else:
-        error_message = f"Failed to load data. Status code: {response.status_code}. Message: Server Error"
+        error_message = f"Failed to load data. Status code: {response.status_code}. Message: {response.reason}"
         return render(request, 'base/error.html', {'error_message': error_message})
 
 def level2(request, area_code_lv2):

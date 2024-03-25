@@ -1438,8 +1438,6 @@ class HasilRekap1API(APIView):
         
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
         
-        url_formd = rekap_hasil_data["url_formd"]
-        
         for key, values in rekap_hasil_data["chart"].items():
             if values == highest_votes:
                 whose_highest = key
@@ -1609,8 +1607,6 @@ class HasilRekap2API(APIView):
         
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
         
-        url_formd = rekap_hasil_data["url_formd"]
-        
         for key, values in rekap_hasil_data["chart"].items():
             if values == highest_votes:
                 whose_highest = key
@@ -1779,8 +1775,6 @@ class HasilRekap3API(APIView):
         
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
         
-        url_formd = rekap_hasil_data["url_formd"]
-        
         for key, values in rekap_hasil_data["chart"].items():
             if values == highest_votes:
                 whose_highest = key
@@ -1939,8 +1933,6 @@ class HasilRekap4API(APIView):
             }
         
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
-        
-        url_formd = rekap_hasil_data["url_formd"]
         
         for key, values in rekap_hasil_data["chart"].items():
             if values == highest_votes:
@@ -2113,8 +2105,6 @@ class HasilRekap5API(APIView):
             }
             
         highest_votes = max(values for key, values in rekap_hasil_data["chart"].items())
-        
-        url_formd = rekap_hasil_data["url_formd"]
         
         for key, values in rekap_hasil_data["chart"].items():
             if values == highest_votes:
