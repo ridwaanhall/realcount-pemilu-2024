@@ -31,8 +31,10 @@ urlpatterns = [
     path('rekap/', views.HasilRekapTingkat1.as_view(), name='rekap_1'),
     path('rekap/<str:area_code_lv2>/', views.HasilRekapTingkat2.as_view(), name='rekap_2'),
     path('rekap/<str:area_code_lv2>/<str:area_code_lv3>/', views.HasilRekapTingkat3.as_view(), name='rekap_3'),
+    path('rekap/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.HasilRekapTingkat4.as_view(), name='rekap_4'),
     
     path('rekap-api/', views.HasilRekap1API.as_view(), name='rekap_api_1'),
     path('rekap-api/<str:area_code_lv2>/', views.HasilRekap2API.as_view(), name='rekap_api_2'),
     path('rekap-api/<str:area_code_lv2>/<str:area_code_lv3>/', views.HasilRekap3API.as_view(), name='rekap_api_3'),
+    path('rekap-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.HasilRekap4API.as_view(), name='rekap_api_4'),
 ]
