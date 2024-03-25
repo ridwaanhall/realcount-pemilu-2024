@@ -15,4 +15,6 @@ urlpatterns = [
     path('rekapitulasi/<str:area_code_lv2>/', views.rekap_hasil2, name='rekapitulasi2'),
     path('rekapitulasi/<str:area_code_lv2>/<str:area_code_lv3>/', views.rekap_hasil3, name='rekapitulasi3'),
     path('rekapitulasi/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/', views.rekap_hasil4, name='rekapitulasi4'),
+    path('rekapitulasi/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/', views.rekap_hasil5, name='rekapitulasi5'),
+    path('about-us/', views.about_us, name='about-us'),
 ]
