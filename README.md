@@ -1,3 +1,7 @@
 # Pemilu 2024
 
-pip freze > requirements.txt
+virtualenv yourenv
+
+pip freeze > requirements.txt
+
+happy coding.
