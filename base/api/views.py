@@ -26,7 +26,6 @@ def getRoutes(request):
         'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/',
         'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/',
         'GET /api/level-api/<str:area_code_lv2>/<str:area_code_lv3>/<str:area_code_lv4>/<str:area_code_lv5>/<str:area_code_lv6>/',
-        
     ]
     return Response(routes)
 
@@ -55,22 +54,19 @@ class Sengketa(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class WilayahTingkat2(APIView):
-    def get(self, request, wilayah_tingkat2, format=None):
-        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-                
+class WilayahAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        levels = ['wilayah_tingkat2', 'wilayah_tingkat3', 'wilayah_tingkat4', 'wilayah_tingkat5']
+        url_parts = ['wilayah/pemilu/ppwp']
 
-class WilayahTingkat3(APIView):
-    def get(self, request, wilayah_tingkat2, wilayah_tingkat3, format=None):
-        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}.json'
-        
+        for level in levels:
+            if level in kwargs:
+                url_parts.append(kwargs[level])
+            else:
+                break
+
+        url = DATABASE + '/'.join(url_parts) + '.json'
+
         try:
             response = requests.get(url)
             data = response.json()
@@ -79,101 +75,25 @@ class WilayahTingkat3(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class WilayahTingkat4(APIView):
-    def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, format=None):
-        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+class VotesAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        levels = ['votes_tingkat2', 'votes_tingkat3', 'votes_tingkat4', 'votes_tingkat5', 'votes_tingkat6']
+        url_parts = ['pemilu/hhcw/ppwp']
 
+        for level in levels:
+            if level in kwargs:
+                url_parts.append(kwargs[level])
+            else:
+                break
 
-class WilayahTingkat5(APIView):
-    def get(self, request, wilayah_tingkat2, wilayah_tingkat3, wilayah_tingkat4, wilayah_tingkat5, format=None):
-        url = DATABASE + f'wilayah/pemilu/ppwp/{wilayah_tingkat2}/{wilayah_tingkat3}/{wilayah_tingkat4}/{wilayah_tingkat5}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        url = DATABASE + '/'.join(url_parts) + '.json'
 
-
-class VotesTingkat1(APIView):
-    def get(self, request, format=None):
-        url = DATABASE + 'pemilu/hhcw/ppwp.json'
-        
         try:
             response = requests.get(url)
             data = response.json()
             return Response(data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class VotesTingkat2(APIView):
-    def get(self, request, votes_tingkat2, format=None):
-        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class VotesTingkat3(APIView):
-    def get(self, request, votes_tingkat2, votes_tingkat3, format=None):
-        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class VotesTingkat4(APIView):
-    def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, format=None):
-        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class VotesTingkat5(APIView):
-    def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, format=None):
-        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class VotesTingkat6(APIView):
-    def get(self, request, votes_tingkat2, votes_tingkat3, votes_tingkat4, votes_tingkat5, votes_tingkat6, format=None):
-        url = DATABASE + f'pemilu/hhcw/ppwp/{votes_tingkat2}/{votes_tingkat3}/{votes_tingkat4}/{votes_tingkat5}/{votes_tingkat6}.json'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
 
 class Level1API(APIView):
     def get(self, request, format=None):
@@ -1383,57 +1303,18 @@ class Level6API(APIView):
         return Response(response_data)
 
 
-class HasilRekapTingkat1(APIView):
-    def get(self, request, format=None):
-        url = DATABASE + 'pemilu/hr/ppwp.json'
+class HasilRekap(APIView):
+    def get(self, request, *args, **kwargs):
+        levels = ['area_code_lv2', 'area_code_lv3', 'area_code_lv4', 'area_code_lv5']
+        url_parts = ['pemilu/hr/ppwp']
 
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+        for level in levels:
+            if level in kwargs:
+                url_parts.append(kwargs[level])
+            else:
+                break
 
-class HasilRekapTingkat2(APIView):
-    def get(self, request, area_code_lv2, format=None):
-        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}.json'
-
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class HasilRekapTingkat3(APIView):
-    def get(self, request, area_code_lv2, area_code_lv3, format=None):
-        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}.json'
-
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class HasilRekapTingkat4(APIView):
-    def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, format=None):
-        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}.json'
-
-        try:
-            response = requests.get(url)
-            data = response.json()
-            return Response(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-class HasilRekapTingkat5(APIView):
-    def get(self, request, area_code_lv2, area_code_lv3, area_code_lv4, area_code_lv5, format=None):
-        url = DATABASE + f'pemilu/hr/ppwp/{area_code_lv2}/{area_code_lv3}/{area_code_lv4}/{area_code_lv5}.json'
+        url = DATABASE + '/'.join(url_parts) + '.json'
 
         try:
             response = requests.get(url)
@@ -2287,7 +2168,7 @@ class HasilRekap5API(APIView):
             if item["kode"] == area_code_lv4:
                 area_name_lv4 = item["nama"]
                 break
-            
+
         area_name_lv5 = None
         for item in wilayah_lv4_data:
             if item["kode"] == area_code_lv5:
