@@ -1,0 +1,122 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}Daftar Sengketa{% endblock title %}
+
+
+{% block vendors_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}" />
+
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/flatpickr/flatpickr.css' %}" />
+{% endblock vendors_css %}
+
+
+{% block row_group_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css' %}" />
+{% endblock row_group_css %}
+
+
+{% block form_validation_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/@form-validation/umd/styles/index.min.css' %}" />
+{% endblock form_validation_css %}
+
+
+{% block page_css %}
+{% endblock page_css %}
+
+
+{% block content %}
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h4 class="py-3 mb-0">
+                Daftar Sengketa Pilpres
+            </h4>
+        </div>
+        <!-- <div class="col-md-6 d-flex justify-content-end">
+            <div class="badge bg-label-warning">Last Updated: {{ last_update }}</div>
+        </div> -->
+    </div>
+
+    <!-- <hr class="my-5" /> -->
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <h5 class="card-header">Daftar Sengketa Pilpres 2024</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>Lokasi</th>
+                        <th>No TPS</th>
+                        <th>Usulan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in json_data %}
+                    <tr>
+                        <!-- <td>{{ item.no_sk_kpu }}</td> -->
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.tgl_sk_kpu }}</td>
+                        <td>{{ item.nama_prov }} - {{ item.nama_kab }} - {{ item.nama_kec }} - {{ item.nama_kel }}</td>
+                        <td>{{ item.no_tps }}</td>
+                        <td>{{ item.tipe_usl }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>Lokasi</th>
+                        <th>No TPS</th>
+                        <th>Usulan</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>        
+    </div>
+    <!--/ DataTable with Buttons -->
+
+</div>
+<!--/ Content -->
+{% endblock content %}
+
+
+{% block vendors_js %}
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+{% endblock vendors_js %}
+
+
+{% block flat_picker %}
+<!-- Flat Picker -->
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'vendor/libs/flatpickr/flatpickr.js' %}"></script>
+{% endblock flat_picker %}
+
+
+{% block form_validation_js %}
+<!-- Form Validation -->
+<script src="{% static 'vendor/libs/@form-validation/umd/bundle/popular.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js' %}"></script>
+{% endblock form_validation_js %}
+
+
+{% block page_js %}
+<!-- Page JS -->
+<script src="{% static 'js/app-academy-overview.js' %}"></script>
+
+<!-- Page JS -->
+<!-- <script src="{% static 'js/tables-datatables-basic.js' %}"></script> -->
+{% endblock page_js %}

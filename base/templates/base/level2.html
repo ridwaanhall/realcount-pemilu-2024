@@ -1,0 +1,236 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} {{ area_name_lv2 }} {% endblock title %}
+
+
+{% block vendors_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}" />
+
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/flatpickr/flatpickr.css' %}" />
+{% endblock vendors_css %}
+
+
+{% block row_group_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css' %}" />
+{% endblock row_group_css %}
+
+
+{% block form_validation_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/@form-validation/umd/styles/index.min.css' %}" />
+{% endblock form_validation_css %}
+
+
+{% block page_css %}
+{% endblock page_css %}
+
+
+{% block content %}
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h4 class="py-3 mb-0">
+                <span class="text-muted fw-light"><a href="/real-count">Hitung Suara</a> /</span>
+                {{ area_name_lv2 }}
+            </h4>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+            <div class="badge bg-label-warning">Last Updated: {{ last_update }}</div>
+        </div>
+    </div>
+    
+    <!-- Hour chart  -->
+    <div class="card bg-transparent shadow-none my-4 border-0">
+        <div class="card-body row p-0 pb-3">
+            <div class="col-12 col-md-8 card-separator">
+                <h3>Hitung Suara Pilpres 2024 - 2028 👋🏻</h3>
+                <div class="col-12 col-lg-12">
+                    <p>Jumlah Total Pemilihan Calon Presiden dan Wakil Presiden Republik Indonesia.</p>
+                </div>
+                <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
+                    <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
+                        <span 
+                            class="bg-label-secondary p-2 rounded"
+                            type="button"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="tooltip-secondary"
+                            title="H. ANIES RASYID BASWEDAN, Ph.D. - Dr. (H.C.) H. A. MUHAIMIN ISKANDAR">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-number-1">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                <path d="M10 10l2 -2v8" />
+                            </svg>
+                        </span>
+                        <div class="content-right">
+                            <p class="mb-0">AMIN <span class="text-info">{{ total_data.100025.percentage_formatted }}</span></p>
+                            <h4 class="text-secondary mb-0">{{ total_data.100025.votes_formatted }}</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span 
+                            class="bg-label-primary p-2 rounded"
+                            type="button"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="tooltip-primary"
+                            title="H. PRABOWO SUBIANTO - GIBRAN RAKABUMING RAKA">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-number-2">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                <path d="M10 8h3a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3" />
+                            </svg>
+                        </span>
+                        <div class="content-right">
+                            <p class="mb-0">PRAGIB <span class="text-info">{{ total_data.100026.percentage_formatted }}</span></p>
+                            <h4 class="text-primary mb-0">{{ total_data.100026.votes_formatted }}</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span 
+                            class="bg-label-danger p-2 rounded"
+                            type="button"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="tooltip-danger"
+                            title="H. GANJAR PRANOWO, S.H., M.I.P. - Prof. Dr. H. M. MAHFUD MD">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-number-3">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                <path d="M10 9a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1" />
+                            </svg>
+                        </span>
+                        <div class="content-right">
+                            <p class="mb-0">GAMA <span class="text-info">{{ total_data.100027.percentage_formatted }}</span></p>
+                            <h4 class="text-danger mb-0">{{ total_data.100027.votes_formatted }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 ps-md-3 ps-lg-4 pt-3 pt-md-0">
+                <!-- <div class="d-flex justify-content-between align-items-center"> -->
+                    <div>
+                        <div>
+                            <h5 class="mb-0">{{ progress_data.progres_tps_formatted }} <span class="text-muted">of</span> {{ progress_data.total_tps_formatted }} <span class="text-muted">TPS</span> (<span class="text-success">{{ progress_data.percentage_tps_formatted }}</span>)</h5>
+                            <div class="progress" style="height: 8px">
+                                {{ html_progres.html_progres_tps|safe }}
+                                <!-- <div class="progress-bar bg-success" role="progressbar" style="width: 78.71%" aria-valuenow="78.71" aria-valuemin="0" aria-valuemax="100"></div> -->
+                            </div>
+                            <h5 class="mb-0">{{ total_votes_formatted }} <span class="text-muted">Total Votes</span></h5>
+                            <div class="progress" style="height: 8px" class="mb-2">
+                                {{ html_progres.html_progress_100025|safe }}
+                                {{ html_progres.html_progress_100026|safe }}
+                                {{ html_progres.html_progress_100027|safe }}
+
+                                <!-- <div class="progress-bar bg-secondary" role="progressbar" style="width: 24.50%" aria-valuenow="24.50" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 58.82%" aria-valuenow="58.82" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 16.68%" aria-valuenow="16.68" aria-valuemin="0" aria-valuemax="100"></div> -->
+                              </div>
+                            <!-- <p class="mb-2">{{ progress_data.percentage_tps_formatted }}</p> -->
+                        </div>
+                        <hr class="my-2" />
+                        <div>
+                            <!-- <span class="badge bg-label-info">Last Updated: {{ last_update }}</span> -->
+                            <h5 class="mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-trophy text-primary">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M17 3a1 1 0 0 1 .993 .883l.007 .117v2.17a3 3 0 1 1 0 5.659v.171a6.002 6.002 0 0 1 -5 5.917v2.083h3a1 1 0 0 1 .117 1.993l-.117 .007h-8a1 1 0 0 1 -.117 -1.993l.117 -.007h3v-2.083a6.002 6.002 0 0 1 -4.996 -5.692l-.004 -.225v-.171a3 3 0 0 1 -3.996 -2.653l-.003 -.176l.005 -.176a3 3 0 0 1 3.995 -2.654l-.001 -2.17a1 1 0 0 1 1 -1h10zm-12 5a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" />
+                                </svg>
+                                Highest Vote
+                            </h5>
+                            <p>{{ whose_highest_votes|safe }}</p>
+                        </div>
+                    </div>
+                    <!-- <div id="leadsReportChart"></div> -->
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- Hour chart End  -->
+
+    <hr class="my-5" />
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <h5 class="card-header py-3 mb-0">
+            {{ area_name_lv2 }}
+        </h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <!-- <th>Code</th> -->
+                        <th>Area Name</th>
+                        <th>H. ANIES RASYID BASWEDAN, Ph.D. <br> Dr. (H.C.) H. A. MUHAIMIN ISKANDAR</th>
+                        <th>H. PRABOWO SUBIANTO <br> GIBRAN RAKABUMING RAKA</th>
+                        <th>H. GANJAR PRANOWO, S.H., M.I.P. <br> Prof. Dr. H. M. MAHFUD MD</th>
+                        <th>TPS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for area_code_lv3, data in total_child_data.items %}
+                    <tr>
+                        <!-- <td>{{ area_code_lv2 }}</td> -->
+                        <td><a href="{% url 'level1' %}{{ data.code_lv2 }}/{{ area_code_lv3 }}">{{ data.area_name }}</a></td>
+                        <td>{{ data.100025_formatted }}</td>
+                        <td>{{ data.100026_formatted }}</td>
+                        <td>{{ data.100027_formatted }}</td>
+                        <td>{{ data.area_progress_formatted }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <!-- <th>Code</th> -->
+                        <th>Area Name</th>
+                        <th>H. ANIES RASYID BASWEDAN, Ph.D. <br> Dr. (H.C.) H. A. MUHAIMIN ISKANDAR</th>
+                        <th>H. PRABOWO SUBIANTO <br> GIBRAN RAKABUMING RAKA</th>
+                        <th>H. GANJAR PRANOWO, S.H., M.I.P. <br> Prof. Dr. H. M. MAHFUD MD</th>
+                        <th>TPS</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>        
+    </div>
+    <!--/ DataTable with Buttons -->
+
+</div>
+<!--/ Content -->
+{% endblock content %}
+
+
+{% block vendors_js %}
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+{% endblock vendors_js %}
+
+
+{% block flat_picker %}
+<!-- Flat Picker -->
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'vendor/libs/flatpickr/flatpickr.js' %}"></script>
+{% endblock flat_picker %}
+
+
+{% block form_validation_js %}
+<!-- Form Validation -->
+<script src="{% static 'vendor/libs/@form-validation/umd/bundle/popular.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js' %}"></script>
+{% endblock form_validation_js %}
+
+
+{% block page_js %}
+<!-- Page JS -->
+<script src="{% static 'js/app-academy-overview.js' %}"></script>
+
+<!-- Page JS -->
+<!-- <script src="{% static 'js/tables-datatables-basic.js' %}"></script> -->
+{% endblock page_js %}

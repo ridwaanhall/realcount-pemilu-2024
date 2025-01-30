@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}About Us{% endblock title %}
+
+
+{% block vendors_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}" />
+{% endblock vendors_css %}
+
+
+{% block row_group_css %}
+{% endblock row_group_css %}
+
+
+{% block form_validation_css %}
+{% endblock form_validation_css %}
+
+
+{% block page_css %}
+{% endblock page_css %}
+
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4">
+        About Us
+    </h4>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Who is Ridwan Halim</h5>
+            <p class="card-text">
+                Ridwan Halim, also known as Ridwaanhall, is a Python programmer currently pursuing a degree in Informatics at the University of Technology Yogyakarta. He has interned at GAOTek Inc. and iNeuron.oi, gaining experience in web development and machine learning for cybersecurity.
+                Ridwan is passionate about Python, particularly Flask, Django, and PyTorch. With 145 repositories on GitHub, he actively contributes to open source projects and is an enthusiastic member of the developer community! 🚀🐍
+            </p>
+            <p class="card-text">
+                an active contributor to the tech community, particularly in the realm of web development and machine learning. Currently a sixth-semester Informatics student at the University of Technology Yogyakarta, Ridwan is also interning at GAOTek Inc., focusing on web development, and at iNeuron.oi, delving into machine learning for cybersecurity. His GitHub profile showcases a diverse range of projects, including a landing page, website & portfolio, and a blog.
+                Ridwan's interests lie in artificial intelligence and machine learning, and he is keen on collaborating on open-source Python projects. He invites discussions and questions related to Python, Flask, Django, AI, and more, signaling his openness to community engagement and knowledge sharing. <a href="https://sl.bing.net/dnaEKSh5JQG" target="_blank" rel="noopener noreferrer">References</a>.
+            </p>
+        </div>
+    </div>
+    <div class="card shadow-none bg-transparent border border-danger mb-3">
+        <div class="card-body">
+            <h5 class="card-title">!!</h5>
+            <p class="card-text">
+                This website has been created by Ridwan Halim (<a href="https://www.instagram.com/ridwaanhall/" target="_blank" rel="noopener noreferrer">ridwaanhall</a>) to provide information regarding the vote results for Presidential and Vice-Presidential Candidates, as The General Election Commissions (KPU) website does not display this information.
+            </p>
+            <p class="card-text">
+                Website ini dibuat oleh Ridwan Halim (<a href="https://www.instagram.com/ridwaanhall/" target="_blank" rel="noopener noreferrer">ridwaanhall</a>) untuk memberikan informasi terkait perolehan suara presiden dan wakil presiden, karena website KPU tidak menampilkan informasi ini.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block vendors_js %}
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+{% endblock vendors_js %}
+
+
+{% block flat_picker %}
+{% endblock flat_picker %}
+
+
+{% block form_validation_js %}
+{% endblock form_validation_js %}
+
+
+{% block page_js %}
+{% endblock page_js %}

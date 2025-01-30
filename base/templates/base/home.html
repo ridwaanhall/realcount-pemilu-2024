@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+
+{% block vendors_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/jstree/jstree.css' %}" />
+{% endblock vendors_css %}
+
+
+{% block row_group_css %}
+{% endblock row_group_css %}
+
+
+{% block form_validation_css %}
+{% endblock form_validation_css %}
+
+
+{% block page_css %}
+{% endblock page_css %}
+
+
+{% block content %}
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4">
+        Home
+    </h4>
+    <!-- Basic -->
+    <div class="col-md-12 col-12">
+        <div class="mb-4">
+            <h5 class="card-header">Select</h5>
+            <div class="card-body">
+                <div id="jstree-basic">
+                    <ul>
+                        <li data-jstree='{"icon" : "ti ti-home"}'>Home</li>
+                        <li data-jstree='{"icon" : "ti ti-math-symbols"}'>Hitung Suara</li>
+                        <li data-jstree='{"icon" : "ti ti-swords"}'>Daftar Sengketa</li>
+                        <li data-jstree='{"icon" : "ti ti-replace"}'>Rekapitulasi Hasil Pemilu</li>
+                        <li data-jstree='{"icon" : "ti ti-gavel"}'>Penetapan Hasil Pemilu</li>
+                        <li data-jstree='{"icon" : "ti ti-users-group"}'>About Us</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Basic -->
+
+</div>
+<!--/ Content -->
+{% endblock content %}
+
+
+{% block vendors_js %}
+<script src="{% static 'vendor/libs/jstree/jstree.js' %}"></script>
+{% endblock vendors_js %}
+
+
+{% block flat_picker %}
+{% endblock flat_picker %}
+
+
+{% block form_validation_js %}
+{% endblock form_validation_js %}
+
+
+{% block page_js %}
+<script src="{% static 'js/extended-ui-treeview.js' %}"></script>
+{% endblock page_js %}

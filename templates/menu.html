@@ -1,0 +1,59 @@
+<!-- Menu -->
+<aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0">
+    <div class="container-xxl d-flex h-100">
+        <ul class="menu-inner">
+            <li class="menu-item{% if request.resolver_match.url_name == 'home' %} active{% endif %}">
+                <a href="{% url 'home' %}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-home"></i>
+                    <div data-i18n="Home">Home</div>
+                </a>
+            </li>
+            <li class="menu-item{% if request.resolver_match.url_name == 'level1' or request.resolver_match.url_name == 'level2' or request.resolver_match.url_name == 'level3' or request.resolver_match.url_name == 'level4' or request.resolver_match.url_name == 'level5' or request.resolver_match.url_name == 'level6' %} active{% endif %}">
+                <a href="{% url 'level1' %}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-math-symbols"></i>
+                    <div data-i18n="Hitung Suara">Hitung Suara</div>
+                </a>
+
+                {% comment %} <ul class="menu-sub">
+                    <li class="menu-item active">
+                        <a href="javascript:void(0)" class="menu-link">
+                            <div data-i18n="Container">Container</div>
+                        </a>
+                    </li>
+                    {% for area_code_lv3, data in level_3.items %}
+                    <li class="menu-item">
+                        <a href="/real-count/{{ data.code_lv2 }}/{{ area_code_lv3 }}" class="menu-link">
+                            {{ data.area_name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul> {% endcomment %}
+            </li>
+            <li class="menu-item{% if request.resolver_match.url_name == 'sengketa' %} active{% endif %}">
+                <a href="{% url 'sengketa' %}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-swords"></i>
+                    <div data-i18n="Daftar Sengketa">Daftar Sengketa</div>
+                </a>
+            </li>
+            <li class="menu-item{% if request.resolver_match.url_name == 'rekapitulasi1' or request.resolver_match.url_name == 'rekapitulasi2' or request.resolver_match.url_name == 'rekapitulasi3' or request.resolver_match.url_name == 'rekapitulasi4' or request.resolver_match.url_name == 'rekapitulasi5' %} active{% endif %}">
+                <a href="{% url 'rekapitulasi1' %}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-replace"></i>
+                    <div data-i18n="Rekapitulasi Hasil Pemilu">Rekapitulasi Hasil Pemilu</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-gavel"></i>
+                    <div data-i18n="Penetapan Hasil Pemilu">Penetapan Hasil Pemilu</div>
+                </a>
+            </li>
+            <li class="menu-item{% if request.resolver_match.url_name == 'about-us' %} active{% endif %}">
+                <a href="{% url 'about-us' %}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-users-group"></i>
+                    <div data-i18n="About Us">About Us</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+<!-- / Menu -->
