@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--ia$k#m%dyjmu8e3#d+sqhwnnj0g9v$n(^n+y2ddv_w5%-i4=e'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEV', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
-
+if not DEBUG:
+    ALLOWED_HOSTS = [
+    'realcount-pemilu-2024.vercel.app',
+    ]
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 

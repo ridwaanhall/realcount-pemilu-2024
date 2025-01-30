@@ -4,3 +4,4 @@ trash/
 db.sqlite3
 venv-pemilu
 test/
+.env
