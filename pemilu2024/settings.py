@@ -28,7 +28,7 @@ DEBUG = config('DEV', default=False, cast=bool)
 
 if not DEBUG:
     ALLOWED_HOSTS = [
-    'realcount-pemilu-2024.vercel.app',
+    '.vercel.app',
     ]
 else:
     ALLOWED_HOSTS = []
