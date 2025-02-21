@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 import logging
+import traceback
 from .Ridwaanhall import DATABASE_API, DATABASE
 
 def getRoutes(request):
@@ -1336,7 +1337,8 @@ class HasilRekap(APIView):
             data = response.json()
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logging.error("Exception occurred", exc_info=True)
+            return Response({'error': 'An internal error has occurred!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         
 class HasilRekap1API(APIView):
