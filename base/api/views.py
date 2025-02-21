@@ -4,9 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+import logging
 from .Ridwaanhall import DATABASE_API, DATABASE
 
-@api_view(['GET'])
 def getRoutes(request):
     routes = [
         "GET /api/",
@@ -50,7 +50,8 @@ class Names(APIView):
             data = response.json()
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logging.error("An error occurred: %s", str(e))
+            return Response({'error': 'An internal error has occurred!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class Sengketa(APIView):
@@ -62,7 +63,8 @@ class Sengketa(APIView):
             data = response.json()
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logging.error("An error occurred: %s", str(e))
+            return Response({'error': 'An internal error has occurred!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class WilayahAPIView(APIView):
@@ -83,7 +85,8 @@ class WilayahAPIView(APIView):
             data = response.json()
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logging.error("An error occurred: %s", str(e))
+            return Response({'error': 'An internal error has occurred!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class VotesAPIView(APIView):
@@ -104,7 +107,8 @@ class VotesAPIView(APIView):
             data = response.json()
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logging.error("An error occurred: %s", str(e))
+            return Response({'error': 'An internal error has occurred!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Level1API(APIView):
     def get(self, request, format=None):
